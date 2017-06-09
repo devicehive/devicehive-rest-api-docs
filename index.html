@@ -192,9 +192,6 @@ The diagram below reflects all used resource types and their relationships:</p>
     <li><strong>$device-update</strong>: Dispatched every time device properties are updated (e.g. device name, status, etc.). The notification includes only the changed properties. If no properties were changed, the notification parameters property is an empty object.</li>
 </ul>
 
-<h3>Server Extensibility</h3>
-<p>The DeviceHive allows to extend server logic by implementing the IMessageManager interface in a separate plug-in assembly and referencing it from the configuration file. The plug-ins can inspect all transmitted messages and apply custom logic as necessary.</p>
-
 <h2>Authentication</h2>
 
 <p>Users are authenticated using <a href="https://jwt.io/introduction/" target="_blank">JSON Web Token</a>.</p>
