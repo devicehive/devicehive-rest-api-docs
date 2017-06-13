@@ -28,6 +28,13 @@
                         <li><a href="#Reference/ApiInfo/getCluster">getCluster</a></li>
                     </ul>
                 </li>
+                <li><a href="#Reference/Configuration">Configuration</a>
+                    <ul id="nav-Reference-Configuration">
+                        <li><a href="#Reference/Configuration/get">get</a></li>
+                        <li><a href="#Reference/Configuration/put">put</a></li>
+                        <li><a href="#Reference/Configuration/delete">delete</a></li>
+                    </ul>
+                </li>
                 <li><a href="#Reference/Device">Device</a>
                     <ul id="nav-Reference-Device">
                         <li><a href="#Reference/Device/list">list</a></li>
@@ -265,6 +272,35 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>None</td>
                     <td>GET /info/config/cluster</td>
                     <td>Returns information about cluster (Kafka, Zookeeper etc.)</td>
+                </tr>
+            </table>
+            <h2>Configuration</h2>
+            <p>Represents a configuration property.</p>
+            <p>For Configuration resource details, see the <a href="#Reference/Configuration">resource representation</a> page.</p>
+            <table>
+                <tr>
+                    <th style="width:120px">Method</th>
+                    <th style="width:150px">Authorization</th>
+                    <th style="width:300px">Uri</th>
+                    <th style="width:400px">Description</th>
+                </tr>
+                <tr>
+                    <td><a href="#Reference/Configuration/get">get</a></td>
+                    <td>JSON Web Token (ManageConfiguration)</td>
+                    <td>GET /configuration/{name}</td>
+                    <td>Returns requested property value.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Reference/Configuration/put">put</a></td>
+                    <td>JSON Web Token (ManageConfiguration)</td>
+                    <td>PUT /configuration/{name}</td>
+                    <td>Creates new or updates existing property.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Reference/Configuration/delete">delete</a></td>
+                    <td>JSON Web Token (ManageConfiguration)</td>
+                    <td>DELETE /configuration/{name}</td>
+                    <td>Deletes a property.</td>
                 </tr>
             </table>
             <h2>Device</h2>
@@ -862,16 +898,19 @@ The diagram below reflects all used resource types and their relationships:</p>
 <table>
     <tr>
         <th style="width:200px">Property Name</th>
+        <th style="width:80px">Required</th>
         <th style="width:80px">Type</th>
         <th style="width:400px">Description</th>
     </tr>
     <tr>
         <td>login</td>
+        <td>Yes</td>
         <td>string</td>
         <td>User login.</td>
     </tr>
     <tr>
         <td>password</td>
+        <td>Yes</td>
         <td>string</td>
         <td>User password.</td>
     </tr>
@@ -919,21 +958,25 @@ The diagram below reflects all used resource types and their relationships:</p>
 <table>
     <tr>
         <th style="width:200px">Property Name</th>
+        <th style="width:80px">Required</th>
         <th style="width:80px">Type</th>
         <th style="width:400px">Description</th>
     </tr>
     <tr>
         <td>userId</td>
+        <td>Yes</td>
         <td>integer</td>
         <td>User identifier.</td>
     </tr>
     <tr>
         <td>expiration</td>
+        <td>No</td>
         <td>datetime</td>
         <td>Expiration date (UTC).</td>
     </tr>
     <tr>
         <td>actions</td>
+        <td>No</td>
         <td>array</td>
         <td>A collection of allowed actions.
             Available values:
@@ -969,6 +1012,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     </tr>
     <tr>
         <td>networkIds</td>
+        <td>No</td>
         <td>array</td>
         <td>A collection of identifiers of allowed networks.
             Only API requests for devices within the allowed networks will be authorized with this permission.
@@ -976,6 +1020,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     </tr>
     <tr>
         <td>deviceIds</td>
+        <td>No</td>
         <td>array</td>
         <td>A collection of unique identifiers of allowed devices.
             Only API requests for allowed devices will be authorized with this permission.
@@ -1207,6 +1252,235 @@ The diagram below reflects all used resource types and their relationships:</p>
 </table>
 
     </div>
+        <div id="Reference-Configuration">
+        
+
+
+
+<h1>Configuration</h1>
+<p>Represents a configuration property.</p>
+
+<h2>Methods</h2>
+<table>
+    <tr>
+        <th style="width:120px">Method</th>
+        <th style="width:150px">Authorization</th>
+        <th style="width:300px">Uri</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td><a href="#Reference/Configuration/get">get</a></td>
+        <td>JSON Web Token (ManageConfiguration)</td>
+        <td>GET /configuration/{name}</td>
+        <td>Returns requested property value.</td>
+    </tr>
+    <tr>
+        <td><a href="#Reference/Configuration/put">put</a></td>
+        <td>JSON Web Token (ManageConfiguration)</td>
+        <td>PUT /configuration/{name}</td>
+        <td>Creates new or updates existing property.</td>
+    </tr>
+    <tr>
+        <td><a href="#Reference/Configuration/delete">delete</a></td>
+        <td>JSON Web Token (ManageConfiguration)</td>
+        <td>DELETE /configuration/{name}</td>
+        <td>Deletes a property.</td>
+    </tr>
+</table>
+
+<h2>Resource Representation</h2>
+<pre>
+{
+    <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;value&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;entityVersion&quot;</span>: <span class="blue">{integer}</span>
+}
+</pre>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>string</td>
+        <td>Configuration parameter name.</td>
+    </tr>
+    <tr>
+        <td>value</td>
+        <td>string</td>
+        <td>Configuration parameter value.</td>
+    </tr>
+    <tr>
+        <td>entityVersion</td>
+        <td>integer</td>
+        <td>Specifies the version field or property of an entity class.</td>
+    </tr>
+</table>
+
+    </div>
+    <div id="Reference-Configuration-get">
+        
+
+
+
+<h1>Configuration: get</h1>
+<p>Returns requested property value.</p>
+
+<h2>Request</h2>
+    
+<h3>HTTP Request</h3>
+<pre class="uri">GET /configuration/{name}</pre>
+    
+<h3>Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Parameter Name</th>
+        <th style="width:80px">Required</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Configuration parameter name.</td>
+    </tr>
+</table>
+    
+<h3>Authorization</h3>
+<p>JSON Web Token (ManageConfiguration)</p>
+
+<h3>Request Body</h3>
+<p>Do not supply a request body with this method.</p>
+    
+<h2>Response</h2>
+<p>If successful, this method returns a <a href="#Reference/Configuration">Configuration</a> resource in the response body.</p>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>string</td>
+        <td>Configuration parameter name.</td>
+    </tr>
+    <tr>
+        <td>value</td>
+        <td>string</td>
+        <td>Configuration parameter value.</td>
+    </tr>
+    <tr>
+        <td>entityVersion</td>
+        <td>integer</td>
+        <td>Specifies the version field or property of an entity class.</td>
+    </tr>
+</table>
+
+    </div>
+    <div id="Reference-Configuration-put">
+        
+
+
+
+<h1>Configuration: put</h1>
+<p>Creates new or updates existing property.</p>
+
+<h2>Request</h2>
+    
+<h3>HTTP Request</h3>
+<pre class="uri">PUT /configuration/{name}</pre>
+    
+<h3>Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Parameter Name</th>
+        <th style="width:80px">Required</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Configuration parameter name.</td>
+    </tr>
+</table>
+    
+<h3>Authorization</h3>
+<p>JSON Web Token (ManageConfiguration)</p>
+
+<h3>Request Body</h3>
+<p>Do not supply a request body with this method.</p>
+    
+<h2>Response</h2>
+<p>If successful, this method returns a <a href="#Reference/Configuration">Configuration</a> resource in the response body.</p>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>string</td>
+        <td>Configuration parameter name.</td>
+    </tr>
+    <tr>
+        <td>value</td>
+        <td>string</td>
+        <td>Configuration parameter value.</td>
+    </tr>
+    <tr>
+        <td>entityVersion</td>
+        <td>integer</td>
+        <td>Specifies the version field or property of an entity class.</td>
+    </tr>
+</table>
+
+    </div>
+    <div id="Reference-Configuration-delete">
+        
+
+
+
+<h1>Configuration: delete</h1>
+<p>Deletes a property.</p>
+
+<h2>Request</h2>
+    
+<h3>HTTP Request</h3>
+<pre class="uri">DELETE /configuration/{name}</pre>
+    
+<h3>Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Parameter Name</th>
+        <th style="width:80px">Required</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Configuration parameter name.</td>
+    </tr>
+</table>
+    
+<h3>Authorization</h3>
+<p>JSON Web Token (ManageConfiguration)</p>
+
+<h3>Request Body</h3>
+<p>Do not supply a request body with this method.</p>
+    
+<h2>Response</h2>
+<p>If successful, this method returns an empty response body.</p>
+
+    </div>
     <div id="Reference-Device">
         
 
@@ -1252,7 +1526,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Resource Representation</h2>
 <pre>
 {
-    <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
+    <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
     <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
@@ -1267,7 +1541,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     </tr>
     <tr>
         <td>id</td>
-        <td>integer</td>
+        <td>string</td>
         <td>Device unique identifier.</td>
     </tr>
     <tr>
@@ -1327,15 +1601,9 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Filter by device name pattern.</td>
     </tr>
     <tr>
-        <td>status</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Filter by device status.</td>
-    </tr>
-    <tr>
         <td>networkId</td>
         <td>No</td>
-        <td>integer</td>
+        <td>long</td>
         <td>Filter by associated network identifier.</td>
     </tr>
     <tr>
@@ -1343,24 +1611,6 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>string</td>
         <td>Filter by associated network name.</td>
-    </tr>
-    <tr>
-        <td>deviceClassId</td>
-        <td>No</td>
-        <td>integer</td>
-        <td>Filter by associated device class identifier.</td>
-    </tr>
-    <tr>
-        <td>deviceClassName</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Filter by associated device class name.</td>
-    </tr>
-    <tr>
-        <td>deviceClassVersion</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Filter by associated device class version.</td>
     </tr>
     <tr>
         <td>sortField</td>
@@ -1752,7 +2002,9 @@ The diagram below reflects all used resource types and their relationships:</p>
     <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
     <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
     <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>
+    <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;isUpdated&quot;</span>: <span class="blue">{boolean}</span>,
+    <span class="green">&quot;hazelcastKey&quot;</span>: <span class="blue">{string}</span>
 }
 </pre>
 <table>
@@ -1767,6 +2019,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -1777,9 +2034,9 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Associated user identifier.</td>
     </tr>
     <tr>
-        <td>command</td>
+        <td>deviceId</td>
         <td>string</td>
-        <td>Command name.</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -1800,6 +2057,16 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>result</td>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
+    </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
@@ -1901,6 +2168,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -1911,9 +2183,9 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Associated user identifier.</td>
     </tr>
     <tr>
-        <td>command</td>
+        <td>deviceId</td>
         <td>string</td>
-        <td>Command name.</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -1935,6 +2207,16 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
     </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
+    </tr>
 </table>
 
     </div>
@@ -1949,7 +2231,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Request</h2>
     
 <h3>HTTP Request</h3>
-<pre class="uri">GET /device/{deviceId}/command/{id}</pre>
+<pre class="uri">GET /device/{deviceId}/command/{commandId}</pre>
     
 <h3>Parameters</h3>
 <table>
@@ -1966,7 +2248,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
     <tr>
-        <td>id</td>
+        <td>commandId</td>
         <td>Yes</td>
         <td>integer</td>
         <td>Command identifier.</td>
@@ -1993,6 +2275,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -2003,9 +2290,9 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Associated user identifier.</td>
     </tr>
     <tr>
-        <td>command</td>
+        <td>deviceId</td>
         <td>string</td>
-        <td>Command name.</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2026,6 +2313,16 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>result</td>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
+    </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
@@ -2078,6 +2375,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command name.</td>
     </tr>
     <tr>
+        <td>timestamp</td>
+        <td>No</td>
+        <td>datetime</td>
+        <td>Command timestamp (UTC).</td>
+    </tr>
+    <tr>
         <td>parameters</td>
         <td>No</td>
         <td>object</td>
@@ -2088,6 +2391,18 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>integer</td>
         <td>Command lifetime, a number of seconds until this command expires.</td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Command status, as reported by device or related infrastructure.</td>
+    </tr>
+    <tr>
+        <td>result</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Command execution result, an optional value that could be provided by device.</td>
     </tr>
 </table>
     
@@ -2105,6 +2420,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -2113,6 +2433,41 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>userId</td>
         <td>integer</td>
         <td>Associated user identifier.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>parameters</td>
+        <td>object</td>
+        <td>Command parameters, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>lifetime</td>
+        <td>integer</td>
+        <td>Command lifetime, a number of seconds until this command expires.</td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>string</td>
+        <td>Command status, as reported by device or related infrastructure.</td>
+    </tr>
+    <tr>
+        <td>result</td>
+        <td>object</td>
+        <td>Command execution result, an optional value that could be provided by device.</td>
+    </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
@@ -2165,6 +2520,30 @@ The diagram below reflects all used resource types and their relationships:</p>
         <th style="width:400px">Description</th>
     </tr>
     <tr>
+        <td>command</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>No</td>
+        <td>datetime</td>
+        <td>Command timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>parameters</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Command parameters, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>lifetime</td>
+        <td>No</td>
+        <td>integer</td>
+        <td>Command lifetime, a number of seconds until this command expires.</td>
+    </tr>
+    <tr>
         <td>status</td>
         <td>No</td>
         <td>string</td>
@@ -2179,7 +2558,69 @@ The diagram below reflects all used resource types and their relationships:</p>
 </table>
     
 <h2>Response</h2>
-<p>If successful, this method returns an empty response body.</p>
+<p>If successful, this method returns a <a href="#Reference/DeviceCommand">DeviceCommand</a> resource in the response body.</p>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>integer</td>
+        <td>Command identifier.</td>
+    </tr>
+    <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Command timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>userId</td>
+        <td>integer</td>
+        <td>Associated user identifier.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>parameters</td>
+        <td>object</td>
+        <td>Command parameters, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>lifetime</td>
+        <td>integer</td>
+        <td>Command lifetime, a number of seconds until this command expires.</td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>string</td>
+        <td>Command status, as reported by device or related infrastructure.</td>
+    </tr>
+    <tr>
+        <td>result</td>
+        <td>object</td>
+        <td>Command execution result, an optional value that could be provided by device.</td>
+    </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
+    </tr>
+</table>
 
     </div>
     <div id="Reference-DeviceCommand-poll">
@@ -2227,8 +2668,14 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td>waitTimeout</td>
         <td>No</td>
-        <td>integer</td>
+        <td>long</td>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
+    </tr>
+    <tr>
+        <td>limit</td>
+        <td>No</td>
+        <td>integer</td>
+        <td>Limits number of commands.</td>
     </tr>
 </table>
     
@@ -2252,6 +2699,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -2262,9 +2714,9 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Associated user identifier.</td>
     </tr>
     <tr>
-        <td>command</td>
+        <td>deviceId</td>
         <td>string</td>
-        <td>Command name.</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2286,6 +2738,16 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
     </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
+    </tr>
 </table>
 
     </div>
@@ -2303,7 +2765,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Request</h2>
     
 <h3>HTTP Request</h3>
-<pre class="uri">GET /device/{deviceId}/command/{id}/poll?waitTimeout={waitTimeout}</pre>
+<pre class="uri">GET /device/{deviceId}/command/{commandId}/poll?waitTimeout={waitTimeout}</pre>
     
 <h3>Parameters</h3>
 <table>
@@ -2320,7 +2782,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
     <tr>
-        <td>id</td>
+        <td>commandId</td>
         <td>Yes</td>
         <td>integer</td>
         <td>Command identifier.</td>
@@ -2353,6 +2815,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
+        <td>command</td>
+        <td>string</td>
+        <td>Command name.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -2363,9 +2830,9 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Associated user identifier.</td>
     </tr>
     <tr>
-        <td>command</td>
+        <td>deviceId</td>
         <td>string</td>
-        <td>Command name.</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2386,6 +2853,16 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>result</td>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
+    </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
@@ -2438,6 +2915,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>integer</td>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
     </tr>
+    <tr>
+        <td>limit</td>
+        <td>No</td>
+        <td>integer</td>
+        <td>Limits number of commands.</td>
+    </tr>
 </table>
     
 <h3>Authorization</h3>
@@ -2455,54 +2938,59 @@ The diagram below reflects all used resource types and their relationships:</p>
         <th style="width:400px">Description</th>
     </tr>
     <tr>
-        <td>deviceId</td>
-        <td>guid</td>
-        <td>Associated device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>command</td>
-        <td>object</td>
-        <td><a href="#Reference/DeviceCommand">DeviceCommand</a> resource.</td>
-    </tr>
-    <tr>
-        <td>command.id</td>
+        <td>id</td>
         <td>integer</td>
         <td>Command identifier.</td>
     </tr>
     <tr>
-        <td>command.timestamp</td>
-        <td>datetime</td>
-        <td>Command timestamp (UTC).</td>
-    </tr>
-    <tr>
-        <td>command.userId</td>
-        <td>integer</td>
-        <td>Associated user identifier.</td>
-    </tr>
-    <tr>
-        <td>command.command</td>
+        <td>command</td>
         <td>string</td>
         <td>Command name.</td>
     </tr>
     <tr>
-        <td>command.parameters</td>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Command timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>userId</td>
+        <td>integer</td>
+        <td>Associated user identifier.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>parameters</td>
         <td>object</td>
         <td>Command parameters, a JSON object with an arbitrary structure.</td>
     </tr>
     <tr>
-        <td>command.lifetime</td>
+        <td>lifetime</td>
         <td>integer</td>
         <td>Command lifetime, a number of seconds until this command expires.</td>
     </tr>
     <tr>
-        <td>command.status</td>
+        <td>status</td>
         <td>string</td>
         <td>Command status, as reported by device or related infrastructure.</td>
     </tr>
     <tr>
-        <td>command.result</td>
+        <td>result</td>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
+    </tr>
+    <tr>
+        <td>isUpdated</td>
+        <td>boolean</td>
+        <td>Indicates, if command was updated.</td>
+    </tr>
+    <tr>
+        <td>hazelcastKey</td>
+        <td>string</td>
+        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
@@ -2565,8 +3053,9 @@ The diagram below reflects all used resource types and their relationships:</p>
 <pre>
 {
     <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
-    <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
     <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
     <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>
 }
 </pre>
@@ -2582,14 +3071,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification identifier.</td>
     </tr>
     <tr>
-        <td>timestamp</td>
-        <td>datetime</td>
-        <td>Notification timestamp (UTC).</td>
-    </tr>
-    <tr>
         <td>notification</td>
         <td>string</td>
         <td>Notification name.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Notification timestamp (UTC).</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2645,13 +3139,6 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Filter by notification name.</td>
     </tr>
     <tr>
-        <td>gridInterval</td>
-        <td>No</td>
-        <td>integer</td>
-        <td>Filter notifications to retrieve maximum one notification of the same type
-            within the specified grid interval (interval is measured in seconds).</td>
-    </tr>
-    <tr>
         <td>sortField</td>
         <td>No</td>
         <td>string</td>
@@ -2667,7 +3154,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>take</td>
         <td>No</td>
         <td>integer</td>
-        <td>Number of records to take from the result list (default is 1000).</td>
+        <td>Number of records to take from the result list (default is 100).</td>
     </tr>
     <tr>
         <td>skip</td>
@@ -2697,14 +3184,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification identifier.</td>
     </tr>
     <tr>
-        <td>timestamp</td>
-        <td>datetime</td>
-        <td>Notification timestamp (UTC).</td>
-    </tr>
-    <tr>
         <td>notification</td>
         <td>string</td>
         <td>Notification name.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Notification timestamp (UTC).</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2769,14 +3261,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification identifier.</td>
     </tr>
     <tr>
-        <td>timestamp</td>
-        <td>datetime</td>
-        <td>Notification timestamp (UTC).</td>
-    </tr>
-    <tr>
         <td>notification</td>
         <td>string</td>
         <td>Notification name.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Notification timestamp (UTC).</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2834,6 +3331,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification name.</td>
     </tr>
     <tr>
+        <td>timestamp</td>
+        <td>No</td>
+        <td>datetime</td>
+        <td>Notification timestamp (UTC).</td>
+    </tr>
+    <tr>
         <td>parameters</td>
         <td>No</td>
         <td>object</td>
@@ -2855,9 +3358,24 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification identifier.</td>
     </tr>
     <tr>
+        <td>notification</td>
+        <td>string</td>
+        <td>Notification name.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Notification timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>parameters</td>
+        <td>object</td>
+        <td>Notification parameters, a JSON object with an arbitrary structure.</td>
     </tr>
 </table>
 
@@ -2907,7 +3425,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td>waitTimeout</td>
         <td>No</td>
-        <td>integer</td>
+        <td>long</td>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
     </tr>
 </table>
@@ -2932,14 +3450,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification identifier.</td>
     </tr>
     <tr>
-        <td>timestamp</td>
-        <td>datetime</td>
-        <td>Notification timestamp (UTC).</td>
-    </tr>
-    <tr>
         <td>notification</td>
         <td>string</td>
         <td>Notification name.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Notification timestamp (UTC).</td>
     </tr>
     <tr>
         <td>parameters</td>
@@ -2994,7 +3517,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td>waitTimeout</td>
         <td>No</td>
-        <td>integer</td>
+        <td>long</td>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
     </tr>
 </table>
@@ -3014,32 +3537,27 @@ The diagram below reflects all used resource types and their relationships:</p>
         <th style="width:400px">Description</th>
     </tr>
     <tr>
-        <td>deviceId</td>
-        <td>guid</td>
-        <td>Associated device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>notification</td>
-        <td>object</td>
-        <td><a href="#Reference/DeviceNotification">DeviceNotification</a> resource.</td>
-    </tr>
-    <tr>
-        <td>notification.id</td>
+        <td>id</td>
         <td>integer</td>
         <td>Notification identifier.</td>
     </tr>
     <tr>
-        <td>notification.timestamp</td>
-        <td>datetime</td>
-        <td>Notification timestamp (UTC).</td>
-    </tr>
-    <tr>
-        <td>notification.notification</td>
+        <td>notification</td>
         <td>string</td>
         <td>Notification name.</td>
     </tr>
     <tr>
-        <td>notification.parameters</td>
+        <td>deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td>datetime</td>
+        <td>Notification timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>parameters</td>
         <td>object</td>
         <td>Notification parameters, a JSON object with an arbitrary structure.</td>
     </tr>
@@ -3616,9 +4134,6 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
@@ -3763,15 +4278,22 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
         <td>lastLogin</td>
         <td>datetime</td>
         <td>User last login timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>object</td>
+        <td>User data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>introReviewed</td>
+        <td>boolean</td>
+        <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
 
@@ -3804,7 +4326,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td>id</td>
         <td>Yes</td>
-        <td>integer</td>
+        <td>long</td>
         <td>User identifier. Use the &#39;current&#39; keyword to get information about the current user.</td>
     </tr>
 </table>
@@ -3862,9 +4384,6 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
@@ -3896,6 +4415,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>networks[].network.description</td>
         <td>string</td>
         <td>Network description.</td>
+    </tr>
+    <tr>
+        <td>introReviewed</td>
+        <td>boolean</td>
+        <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
 
@@ -3963,9 +4487,6 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
@@ -3973,6 +4494,18 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Yes</td>
         <td>string</td>
         <td>User password</td>
+    </tr>
+    <tr>
+        <td>oldPassword</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>User old password. Required for non-admin users.</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>Yes</td>
+        <td>object</td>
+        <td>User data, a JSON object with an arbitrary structure.</td>
     </tr>
 </table>
     
@@ -3990,9 +4523,55 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>User identifier.</td>
     </tr>
     <tr>
+        <td>login</td>
+        <td>string</td>
+        <td>User login using during authentication.</td>
+    </tr>
+    <tr>
+        <td>role</td>
+        <td>integer</td>
+        <td>User role.
+            Available values:
+            <ul class="doc">
+  <li class="doc">
+    0: Administrator role
+  </li>
+  <li class="doc">
+    1: Client role
+  </li>
+</ul></td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>integer</td>
+        <td>User status.
+            Available values:
+            <ul class="doc">
+  <li class="doc">
+    0: The user is active
+  </li>
+  <li class="doc">
+    1: The user has been locked out due to invalid login attempts
+  </li>
+  <li class="doc">
+    2: The user has been disabled
+  </li>
+</ul></td>
+    </tr>
+    <tr>
         <td>lastLogin</td>
         <td>datetime</td>
         <td>User last login timestamp (UTC).</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>object</td>
+        <td>User data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>introReviewed</td>
+        <td>boolean</td>
+        <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
 
@@ -4082,9 +4661,6 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
@@ -4098,6 +4674,18 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>string</td>
         <td>User current password (for non-administrative password changing functionality only)</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>No</td>
+        <td>object</td>
+        <td>User data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>introReviewed</td>
+        <td>No</td>
+        <td>boolean</td>
+        <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
     
@@ -4159,23 +4747,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Request</h2>
     
 <h3>HTTP Request</h3>
-<pre class="uri">GET /user/{id}</pre>
-    
-<h3>Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Parameter Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>id</td>
-        <td>Yes</td>
-        <td>integer</td>
-        <td>User identifier. Use the &#39;current&#39; keyword to get information about the current user.</td>
-    </tr>
-</table>
+<pre class="uri">GET /user/current</pre>
     
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetCurrentUser)</p>
@@ -4230,9 +4802,6 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
@@ -4246,22 +4815,17 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Array of networks associated with the user</td>
     </tr>
     <tr>
-        <td>networks[].network</td>
-        <td>object</td>
-        <td>Associated network object.</td>
-    </tr>
-    <tr>
-        <td>networks[].network.id</td>
+        <td>networks[].id</td>
         <td>integer</td>
         <td>Network identifier.</td>
     </tr>
     <tr>
-        <td>networks[].network.name</td>
+        <td>networks[].name</td>
         <td>string</td>
         <td>Network display name.</td>
     </tr>
     <tr>
-        <td>networks[].network.description</td>
+        <td>networks[].description</td>
         <td>string</td>
         <td>Network description.</td>
     </tr>
@@ -4286,23 +4850,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Request</h2>
     
 <h3>HTTP Request</h3>
-<pre class="uri">PUT /user/{id}</pre>
-    
-<h3>Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Parameter Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>id</td>
-        <td>Yes</td>
-        <td>integer</td>
-        <td>User identifier. Use the &#39;current&#39; keyword to update information of the current user.</td>
-    </tr>
-</table>
+<pre class="uri">PUT /user</pre>
     
 <h3>Authorization</h3>
 <p>Access JSON Web Token (UpdateCurrentUser)</p>
@@ -4353,9 +4901,6 @@ The diagram below reflects all used resource types and their relationships:</p>
   <li class="doc">
     2: The user has been disabled
   </li>
-  <li class="doc">
-    3: The user has been deleted
-  </li>
 </ul></td>
     </tr>
     <tr>
@@ -4369,6 +4914,18 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>string</td>
         <td>User current password (for non-administrative password changing functionality only)</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>No</td>
+        <td>object</td>
+        <td>User data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>introReviewed</td>
+        <td>No</td>
+        <td>boolean</td>
+        <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
     
