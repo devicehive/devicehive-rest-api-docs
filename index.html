@@ -357,7 +357,7 @@ The diagram below reflects all used resource types and their relationships:</p>
                 <tr>
                     <td><a href="#Reference/DeviceCommand/get">get</a></td>
                     <td>Access JSON Web Token (GetDeviceCommand)</td>
-                    <td>GET /device/{deviceId}/command/{id}</td>
+                    <td>GET /device/{deviceId}/command/{commandId}</td>
                     <td>Gets information about device command.</td>
                 </tr>
                 <tr>
@@ -369,7 +369,7 @@ The diagram below reflects all used resource types and their relationships:</p>
                 <tr>
                     <td><a href="#Reference/DeviceCommand/update">update</a></td>
                     <td>Access JSON Web Token (UpdateDeviceCommand)</td>
-                    <td>PUT /device/{deviceId}/command/{id}</td>
+                    <td>PUT /device/{deviceId}/command/{commandId}</td>
                     <td>Updates an existing device command.</td>
                 </tr>
                 <tr>
@@ -384,7 +384,7 @@ The diagram below reflects all used resource types and their relationships:</p>
                 <tr>
                     <td><a href="#Reference/DeviceCommand/wait">wait</a></td>
                     <td>Access JSON Web Token (GetDeviceCommand)</td>
-                    <td>GET /device/{deviceId}/command/{id}/poll</td>
+                    <td>GET /device/{deviceId}/command/{commandId}/poll</td>
                     <td><p class="doc">Waits for a command to be processed.</p><p class="doc">This method returns a command only if it has been processed by a device.</p><p class="doc">In the case when command is not processed, the method blocks until device acknowledges command execution.
                     If the command is not processed within the waitTimeout period, the server returns an empty response.
                     In this case, to continue polling, the client should repeat the call.
@@ -546,7 +546,7 @@ The diagram below reflects all used resource types and their relationships:</p>
                 <tr>
                     <td><a href="#Reference/User/getCurrent">getCurrent</a></td>
                     <td>Access JSON Web Token (ManageUser)</td>
-                    <td>GET /user/{id}/network/{networkId}</td>
+                    <td>GET /user/current</td>
                     <td>Gets information about user/network association.
 			            <p class="doc">
 			            Only administrators are allowed to get information about any user.
@@ -557,7 +557,7 @@ The diagram below reflects all used resource types and their relationships:</p>
                 <tr>
                     <td><a href="#Reference/User/updateCurrent">updateCurrent</a></td>
                     <td>Access JSON Web Token (ManageUser)</td>
-                    <td>GET /user/{id}/network/{networkId}</td>
+                    <td>PUT /user/current</td>
                     <td>Updates the current user.
 			            <p class="doc">
 			            Only administrators are allowed to update any property of any user.
@@ -1943,7 +1943,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td><a href="#Reference/DeviceCommand/get">get</a></td>
         <td>Access JSON Web Token (GetDeviceCommand)</td>
-        <td>GET /device/{deviceId}/command/{id}</td>
+        <td>GET /device/{deviceId}/command/{commandId}</td>
         <td>Gets information about device command.</td>
     </tr>
     <tr>
@@ -1955,7 +1955,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td><a href="#Reference/DeviceCommand/update">update</a></td>
         <td>Access JSON Web Token (UpdateDeviceCommand)</td>
-        <td>PUT /device/{deviceId}/command/{id}</td>
+        <td>PUT /device/{deviceId}/command/{commandId}</td>
         <td>Updates an existing device command.</td>
     </tr>
     <tr>
@@ -1970,7 +1970,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td><a href="#Reference/DeviceCommand/wait">wait</a></td>
         <td>Access JSON Web Token (GetDeviceCommand)</td>
-        <td>GET /device/{deviceId}/command/{id}/poll</td>
+        <td>GET /device/{deviceId}/command/{commandId}/poll</td>
         <td><p class="doc">Waits for a command to be processed.</p><p class="doc">This method returns a command only if it has been processed by a device.</p><p class="doc">In the case when command is not processed, the method blocks until device acknowledges command execution.
                     If the command is not processed within the waitTimeout period, the server returns an empty response.
                     In this case, to continue polling, the client should repeat the call.
@@ -2478,7 +2478,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Request</h2>
     
 <h3>HTTP Request</h3>
-<pre class="uri">PUT /device/{deviceId}/command/{id}</pre>
+<pre class="uri">PUT /device/{deviceId}/command/{commandId}</pre>
     
 <h3>Parameters</h3>
 <table>
@@ -2495,7 +2495,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
     <tr>
-        <td>id</td>
+        <td>commandId</td>
         <td>Yes</td>
         <td>integer</td>
         <td>Device command identifier.</td>
@@ -4029,7 +4029,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td><a href="#Reference/User/getCurrent">getCurrent</a></td>
         <td>Access JSON Web Token (ManageUser)</td>
-        <td>GET /user/{id}/network/{networkId}</td>
+        <td>GET /user/current</td>
         <td>Gets information about user/network association.
             <p class="doc">
             Only administrators are allowed to get information about any user.
@@ -4040,7 +4040,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td><a href="#Reference/User/updateCurrent">updateCurrent</a></td>
         <td>Access JSON Web Token (ManageUser)</td>
-        <td>GET /user/{id}/network/{networkId}</td>
+        <td>PUT /user/current</td>
         <td>Updates the current user.
             <p class="doc">
             Only administrators are allowed to update any property of any user.
@@ -4824,6 +4824,18 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>string</td>
         <td>Network description.</td>
     </tr>
+    <tr>
+        <td>data</td>
+        <td>No</td>
+        <td>object</td>
+        <td>User data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>introReviewed</td>
+        <td>No</td>
+        <td>boolean</td>
+        <td>Indicates if user reviewed an intro.</td>
+    </tr>
 </table>
 
     </div>
@@ -4845,7 +4857,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 <h2>Request</h2>
     
 <h3>HTTP Request</h3>
-<pre class="uri">PUT /user</pre>
+<pre class="uri">PUT /user/current</pre>
     
 <h3>Authorization</h3>
 <p>Access JSON Web Token (UpdateCurrentUser)</p>
