@@ -113,6 +113,7 @@
                         <li><a href="#WsReference/Device/commandunsubscribe">command/unsubscribe</a></li>
                         <li><a href="#WsReference/Device/commandupdate">command/update</a></li>
                         <li><a href="#WsReference/Device/deviceget">device/get</a></li>
+                        <li><a href="#WsReference/Device/devicelist">device/list</a></li>
                         <li><a href="#WsReference/Device/devicesave">device/save</a></li>
                         <li><a href="#WsReference/Device/notificationinsert">notification/insert</a></li>
                         <li><a href="#WsReference/Device/serverinfo">server/info</a></li>
@@ -7214,6 +7215,141 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>device.deviceClass.equipment[].data</td>
         <td>object</td>
         <td>Equipment data, a JSON object with an arbitrary structure.</td>
+    </tr>
+</table>
+
+    </div>
+    <div id="WsReference-Device-devicelist">
+
+
+
+
+<h1>Device: device/list</h1>
+
+<p>Gets the list of devices.</p>
+
+<h2>Request Message</h2>
+<h3>Authorization</h3>
+<p>Device</p>
+<h3>Message Representation</h3>
+<pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+<h3>Message Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Required</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>action</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Action name: device/list</td>
+    </tr>
+    <tr>
+        <td>requestId</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Request unique identifier, will be passed back in the response message.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
+    </tr>
+</table>
+
+<h2>Server Message</h2>
+
+<h3>Message Representation</h3>
+<pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;devices&quot;</span>: [{
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>,
+    }]
+}
+</pre>
+
+
+<h3>Message Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>action</td>
+        <td>string</td>
+        <td>Action name: device/list</td>
+    </tr>
+    <tr>
+        <td>requestId</td>
+        <td>object</td>
+        <td>Request unique identifier as specified in the request message.</td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>string</td>
+        <td>Operation execution status (success or error).</td>
+    </tr>
+    <tr>
+        <td>devices</td>
+        <td>array</td>
+        <td>The array of devices.</td>
+    </tr>
+    <tr>
+        <td>device</td>
+        <td>object</td>
+        <td>The <a href="#Reference/Device">Device</a> resource representing the user device.</td>
+    </tr>
+    <tr>
+        <td>device.id</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>device.name</td>
+        <td>string</td>
+        <td>Device display name.</td>
+    </tr>
+    <tr>
+        <td>device.status</td>
+        <td>string</td>
+        <td>Device operation status.
+            The status is optional and it can be set to an arbitrary value, if applicable.
+            <p class="doc">If device status monitoring feature is enabled, the framework will set status value to &#39;Offline&#39; after defined period of inactivity.</p></td>
+    </tr>
+    <tr>
+        <td>device.data</td>
+        <td>object</td>
+        <td>Device data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>device.networkId</td>
+        <td>integer</td>
+        <td>Network identifier.</td>
+    </tr>
+    <tr>
+        <td>device.isBlocked</td>
+        <td>boolean</td>
+        <td>Device isBlocked identifier.</td>
     </tr>
 </table>
 
