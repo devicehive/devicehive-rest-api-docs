@@ -5313,6 +5313,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
     <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;command&quot;</span>: {
         <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datatime}</span>,
@@ -5348,6 +5349,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Yes</td>
         <td>string</td>
         <td>Target device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
     </tr>
     <tr>
         <td>command</td>
@@ -5473,8 +5480,9 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
-    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{integer}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
     <span class="green">&quot;names&quot;</span>: <span class="blue">{array}</span>
     <span class="green">&quot;limit&quot;</span>: <span class="blue">{integer}</span>
@@ -5501,6 +5509,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Request unique identifier, will be passed back in the response message.</td>
     </tr>
     <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
+    </tr>
+    <tr>
         <td>timestamp</td>
         <td>No</td>
         <td>datetime</td>
@@ -5509,7 +5523,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <tr>
         <td>deviceId</td>
         <td>No</td>
-        <td>array</td>
+        <td>string</td>
         <td>A unique device identifier to subscribe to. If not specified, used deviceIds, otherwise the subscription is made to all accessible devices.</td>
     </tr>
     <tr>
@@ -5592,6 +5606,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
     <span class="green">&quot;subscriptionId&quot;</span>: <span class="blue">{guid}</span>
 }
@@ -5615,6 +5630,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>object</td>
         <td>Request unique identifier, will be passed back in the response message.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
     </tr>
     <tr>
         <td>deviceIds</td>
@@ -5684,6 +5705,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;commandId&quot;</span>: <span class="blue">{integer}</span>,
     <span class="green">&quot;command&quot;</span>: {
@@ -5715,6 +5737,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>object</td>
         <td>Request unique identifier, will be passed back in the response message.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
     </tr>
     <tr>
         <td>deviceId</td>
@@ -5827,6 +5855,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
     <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;notification&quot;</span>: {
         <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datatime}</span>,
@@ -5859,6 +5888,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Yes</td>
         <td>string</td>
         <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
     </tr>
     <tr>
         <td>notification</td>
@@ -5960,6 +5995,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
     <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{integer}</span>,
     <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
@@ -5985,6 +6021,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>object</td>
         <td>Request unique identifier, will be passed back in the response message.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
     </tr>
     <tr>
         <td>timestamp</td>
@@ -6072,6 +6114,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
     <span class="green">&quot;subscriptionId&quot;</span>: <span class="blue">{guid}</span>
 }
@@ -6096,7 +6139,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>object</td>
         <td>Request unique identifier, will be passed back in the response message.</td>
     </tr>
-        <tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
+    </tr>
+    <tr>
         <td>deviceIds</td>
         <td>No</td>
         <td>array</td>
@@ -6272,6 +6321,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
         <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
         <span class="green">&quot;userId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
         <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
@@ -6323,6 +6373,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>command.userId</td>
         <td>integer</td>
         <td>Associated user identifier.</td>
+    </tr>
+    <tr>
+        <td>command.deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>command.command</td>
@@ -6713,7 +6768,11 @@ The diagram below reflects all used resource types and their relationships:</p>
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
     <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>
+    <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
+    <span class="green">&quot;names&quot;</span>: <span class="blue">{array}</span>
+    <span class="green">&quot;limit&quot;</span>: <span class="blue">{integer}</span>
 }
 </pre>
 <h3>Message Parameters</h3>
@@ -6747,6 +6806,30 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>datetime</td>
         <td>Timestamp of the last received command (UTC). If not specified, the server&#39;s timestamp is taken instead.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>No</td>
+        <td>string</td>
+        <td>A unique device identifier to subscribe to. If not specified, used deviceIds, otherwise the subscription is made to all accessible devices.</td>
+    </tr>
+    <tr>
+        <td>deviceIds</td>
+        <td>No</td>
+        <td>array</td>
+        <td>Array of device unique identifiers to subscribe to. If not specified, used deviceId, otherwise the subscription is made to all accessible devices.</td>
+    </tr>
+    <tr>
+        <td>names</td>
+        <td>No</td>
+        <td>array</td>
+        <td>Array of command names to subscribe to.</td>
+    </tr>
+    <tr>
+        <td>limit</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Limits the number of commands for a subscription.</td>
     </tr>
 </table>
 
@@ -6805,6 +6888,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
     <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;subscriptionId&quot;</span>: <span class="blue">{guid}</span>
 }
 </pre>
 <h3>Message Parameters</h3>
@@ -6832,6 +6916,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>string</td>
         <td>Access JSON Web Token (specify if not authenticated).</td>
+    </tr>
+    <tr>
+        <td>subscriptionId</td>
+        <td>No</td>
+        <td>guid</td>
+        <td>An identifier of the previously made subscription to unsubscribe from.</td>
     </tr>
 </table>
 
@@ -7024,6 +7114,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
 }
 </pre>
@@ -7048,6 +7139,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Request unique identifier, will be passed back in the response message.</td>
     </tr>
     <tr>
+        <td>deviceId</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Device unique identifier, if not specified the device for the principal will be passed back in the response message.</td>
+    </tr>
+    <tr>
         <td>token</td>
         <td>No</td>
         <td>string</td>
@@ -7068,11 +7165,8 @@ The diagram below reflects all used resource types and their relationships:</p>
         <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
-        <span class="green">&quot;network&quot;</span>: {
-            <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
-            <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
-            <span class="green">&quot;description&quot;</span>: <span class="blue">{string}</span>
-        }
+        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>
     }
 }
 </pre>
@@ -7128,93 +7222,14 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device data, a JSON object with an arbitrary structure.</td>
     </tr>
     <tr>
-        <td>device.network</td>
-        <td>object</td>
-        <td>Associated network object.</td>
-    </tr>
-    <tr>
-        <td>device.network.id</td>
+        <td>device.networkId</td>
         <td>integer</td>
         <td>Network identifier.</td>
     </tr>
     <tr>
-        <td>device.network.name</td>
-        <td>string</td>
-        <td>Network display name.</td>
-    </tr>
-    <tr>
-        <td>device.network.description</td>
-        <td>string</td>
-        <td>Network description.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass</td>
-        <td>object</td>
-        <td>Associated device class object.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.id</td>
-        <td>integer</td>
-        <td>Device class identifier.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.name</td>
-        <td>string</td>
-        <td>Device class display name.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.version</td>
-        <td>string</td>
-        <td>Device class version.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.isPermanent</td>
+        <td>device.isBlocked</td>
         <td>boolean</td>
-        <td>Indicates whether device class is permanent.
-            Permanent device classes could not be modified by devices during registration.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.offlineTimeout</td>
-        <td>integer</td>
-        <td>If set, specifies inactivity timeout in seconds before the framework changes device status to &#39;Offline&#39;.
-            Device considered inactive when it&#39;s not persistently connected and does not send any notifications.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.data</td>
-        <td>object</td>
-        <td>Device class data, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.equipment</td>
-        <td>array</td>
-        <td>A collection of associated equipment objects.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.equipment[].id</td>
-        <td>integer</td>
-        <td>Equipment identifier.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.equipment[].name</td>
-        <td>string</td>
-        <td>Equipment display name.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.equipment[].code</td>
-        <td>string</td>
-        <td>Equipment code.
-            It&#39;s used to reference particular equipment and it should be unique within a device class.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.equipment[].type</td>
-        <td>string</td>
-        <td>Equipment type.
-            An arbitrary string representing equipment capabilities.</td>
-    </tr>
-    <tr>
-        <td>device.deviceClass.equipment[].data</td>
-        <td>object</td>
-        <td>Equipment data, a JSON object with an arbitrary structure.</td>
+        <td>Device isBlocked identifier.</td>
     </tr>
 </table>
 
@@ -7404,15 +7419,15 @@ The diagram below reflects all used resource types and their relationships:</p>
     </tr>
     <tr>
         <td>token</td>
-        <td>Yes</td>
+        <td>No</td>
         <td>string</td>
         <td>Access JSON Web Token (specify if not authenticated).</td>
     </tr>
     <tr>
         <td>deviceId</td>
-        <td>No</td>
+        <td>Yes</td>
         <td>string</td>
-        <td>Device unique identifier (specify if not authenticated).</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>device</td>
@@ -7506,6 +7521,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
     <span class="green">&quot;notification&quot;</span>: {
         <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
@@ -7532,6 +7548,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>No</td>
         <td>object</td>
         <td>Request unique identifier, will be passed back in the response message.</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Device unique identifier, if not specified the device for the principal will be passed back in the response message.</td>
     </tr>
     <tr>
         <td>token</td>
@@ -7739,6 +7761,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
         <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
         <span class="green">&quot;userId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
         <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
@@ -7785,6 +7808,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>command.userId</td>
         <td>integer</td>
         <td>Associated user identifier.</td>
+    </tr>
+    <tr>
+        <td>command.deviceId</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
     </tr>
     <tr>
         <td>command.command</td>
