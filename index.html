@@ -90,13 +90,16 @@
         </li>
         <li><a href="#WsReference">WebSocket API Reference</a>
             <ul>
-                <li><a href="#WsReference/Client">Client</a>
+                <li><a href="#WsReference/Client">Client / Device</a>
                     <ul id="nav-WsReference-Client">
                         <li><a href="#WsReference/Client/authenticate">authenticate</a></li>
                         <li><a href="#WsReference/Client/commandinsert">command/insert</a></li>
                         <li><a href="#WsReference/Client/commandsubscribe">command/subscribe</a></li>
                         <li><a href="#WsReference/Client/commandunsubscribe">command/unsubscribe</a></li>
                         <li><a href="#WsReference/Client/commandupdate">command/update</a></li>
+                        <li><a href="#WsReference/Client/deviceget">device/get</a></li>
+                        <li><a href="#WsReference/Client/devicelist">device/list</a></li>
+                        <li><a href="#WsReference/Client/devicesave">device/save</a></li>
                         <li><a href="#WsReference/Client/notificationinsert">notification/insert</a></li>
                         <li><a href="#WsReference/Client/notificationsubscribe">notification/subscribe</a></li>
                         <li><a href="#WsReference/Client/notificationunsubscribe">notification/unsubscribe</a></li>
@@ -104,20 +107,6 @@
                         <li><a href="#WsReference/Client/srvcommandinsert">srv: command/insert</a></li>
                         <li><a href="#WsReference/Client/srvcommandupdate">srv: command/update</a></li>
                         <li><a href="#WsReference/Client/srvnotificationinsert">srv: notification/insert</a></li>
-                    </ul>
-                </li>
-                <li><a href="#WsReference/Device">Device</a>
-                    <ul id="nav-WsReference-Device">
-                        <li><a href="#WsReference/Device/authenticate">authenticate</a></li>
-                        <li><a href="#WsReference/Device/commandsubscribe">command/subscribe</a></li>
-                        <li><a href="#WsReference/Device/commandunsubscribe">command/unsubscribe</a></li>
-                        <li><a href="#WsReference/Device/commandupdate">command/update</a></li>
-                        <li><a href="#WsReference/Device/deviceget">device/get</a></li>
-                        <li><a href="#WsReference/Device/devicelist">device/list</a></li>
-                        <li><a href="#WsReference/Device/devicesave">device/save</a></li>
-                        <li><a href="#WsReference/Device/notificationinsert">notification/insert</a></li>
-                        <li><a href="#WsReference/Device/serverinfo">server/info</a></li>
-                        <li><a href="#WsReference/Device/srvcommandinsert">srv: command/insert</a></li>
                     </ul>
                 </li>
             </ul>
@@ -642,6 +631,24 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>Client</td>
                     <td>Access JSON Web Token (UpdateDeviceCommand)</td>
                     <td>Updates an existing device command on behalf of device.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/deviceget">device/get</a></td>
+                    <td>Device</td>
+                    <td>Device</td>
+                    <td>Gets information about the current device.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/deviceget">device/list</a></td>
+                    <td>Device</td>
+                    <td>Device</td>
+                    <td>Gets list of devices.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Device/devicesave">device/save</a></td>
+                    <td>Device</td>
+                    <td>Device</td>
+                    <td>Registers or updates a device.</td>
                 </tr>
                 <tr>
                     <td><a href="#WsReference/Client/notificationinsert">notification/insert</a></td>
@@ -5108,7 +5115,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client</h1>
+<h1>Client / Device</h1>
 
 <p><p class="doc">
             The service allows clients to exchange messages with the DeviceHive server using a single persistent connection.
@@ -5117,12 +5124,19 @@ The diagram below reflects all used resource types and their relationships:</p>
             and then start sending commands to devices using the command/insert message.
             As soon as a command is processed by a device, the server sends the command/update message.
             </p><p class="doc">
+            After connection is established, devices need to register using the device/save message, 
+            perform authentication and then start sending notifications using the notification/insert message.
+            </p><p class="doc">
             Clients may also subscribe to device notifications using the notification/subscribe message
             and then start receiving server-originated messages about new device notifications.
+            </p><p class="doc">
+            Devices may also subscribe to commands using the command/subscrive message and then
+            start receiving server-originated messages about new commands.
             </p></p>
 
 <h2>WebSocket Handshake URI</h2>
 <pre class="uri">GET /client</pre>
+<pre class="uri">GET /device</pre>
 
 <h2>Messages</h2>
 <table>
@@ -5134,57 +5148,76 @@ The diagram below reflects all used resource types and their relationships:</p>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/authenticate">authenticate</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>None</td>
-        <td>Authenticates a client with access JSON Web Token.</td>
+        <td>Authenticates a client / device with access JSON Web Token. After successful authentication,
+            all subsequent messages may exclude JSON Web Token parameter.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/commandinsert">command/insert</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (CreateDeviceCommand)</td>
         <td>Creates new device command.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/commandsubscribe">command/subscribe</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (GetDeviceCommand)</td>
         <td>Subscribes to device commands.
             After subscription is completed, the server will start to send command/insert messages to the connected user.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/commandunsubscribe">command/unsubscribe</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (GetDeviceCommand)</td>
         <td>Unsubscribes from device commands.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/commandupdate">command/update</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (UpdateDeviceCommand)</td>
         <td>Updates an existing device command on behalf of device.</td>
     </tr>
     <tr>
+        <td><a href="#WsReference/Device/deviceget">device/get</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (GetDevice)</td>
+        <td>Gets information about the current device.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Device/deviceget">device/list</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (GetDevice)</td>
+        <td>Gets information about the current device.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Device/devicesave">device/save</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (RegisterDevice)</td>
+        <td>Registers or updates a device.</td>
+    </tr>
+    <tr>
         <td><a href="#WsReference/Client/notificationinsert">notification/insert</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (CreateDeviceNotification)</td>
         <td>Creates new device notification on behalf of device.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/notificationsubscribe">notification/subscribe</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (GetDeviceNotification)</td>
         <td>Subscribes to device notifications.
             After subscription is completed, the server will start to send notification/insert messages to the connected user.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/notificationunsubscribe">notification/unsubscribe</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>Access JSON Web Token (GetDeviceNotification)</td>
         <td>Unsubscribes from device notifications.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/serverinfo">server/info</a></td>
-        <td>Client</td>
+        <td>Client / Device</td>
         <td>None</td>
         <td>Gets meta-information about the current API.</td>
     </tr>
@@ -5215,9 +5248,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: authenticate</h1>
+<h1>Client / Device : authenticate</h1>
 
-<p>Authenticates a client by a JSON Web Token.</p>
+<p>Authenticates a client / device by a JSON Web Token. 
+    After successful authentication, all subsequent messages may exclude JSON Web Token parameter.</p>
 
 <h2>Request Message</h2>
 <h3>Authorization</h3>
@@ -5300,7 +5334,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: command/insert</h1>
+<h1>Client / Device : command/insert</h1>
 
 <p>Creates new device command.</p>
 
@@ -5467,7 +5501,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: command/subscribe</h1>
+<h1>Client / Device: command/subscribe</h1>
 
 <p>Subscribes to device commands.
             After subscription is completed, the server will start to send command/insert messages to the connected user.</p>
@@ -5594,7 +5628,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: command/unsubscribe</h1>
+<h1>Client / Device: command/unsubscribe</h1>
 
 <p>Unsubscribes from device commands.</p>
 
@@ -5693,7 +5727,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: command/update</h1>
+<h1>Client / Device : command/update</h1>
 
 <p>Updates an existing device command on behalf of device.</p>
 
@@ -5837,12 +5871,417 @@ The diagram below reflects all used resource types and their relationships:</p>
 </table>
 
     </div>
+
+    <div id="WsReference-Client-deviceget">
+    
+    <h1>Client / Device: device/get</h1>
+
+    <p>Gets information about the current device.</p>
+
+    <h2>Request Message</h2>
+    <h3>Authorization</h3>
+    <p>Device</p>
+    <h3>Message Representation</h3>
+    <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
+}
+</pre>
+    <h3>Message Parameters</h3>
+    <table>
+        <tr>
+            <th style="width:200px">Property Name</th>
+            <th style="width:80px">Required</th>
+            <th style="width:80px">Type</th>
+            <th style="width:400px">Description</th>
+        </tr>
+        <tr>
+            <td>action</td>
+            <td>Yes</td>
+            <td>string</td>
+            <td>Action name: device/get</td>
+        </tr>
+        <tr>
+            <td>requestId</td>
+            <td>No</td>
+            <td>object</td>
+            <td>Request unique identifier, will be passed back in the response message.</td>
+        </tr>
+        <tr>
+            <td>deviceId</td>
+            <td>No</td>
+            <td>string</td>
+            <td>Device unique identifier, if not specified the device for the principal will be passed back in the response message.</td>
+        </tr>
+        <tr>
+            <td>token</td>
+            <td>No</td>
+            <td>string</td>
+            <td>Access JSON Web Token (specify if not authenticated).</td>
+        </tr>
+    </table>
+
+    <h2>Server Message</h2>
+
+    <h3>Message Representation</h3>
+    <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;device&quot;</span>: {
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>
+    }
+}
+</pre>
+
+
+    <h3>Message Parameters</h3>
+    <table>
+        <tr>
+            <th style="width:200px">Property Name</th>
+            <th style="width:80px">Type</th>
+            <th style="width:400px">Description</th>
+        </tr>
+        <tr>
+            <td>action</td>
+            <td>string</td>
+            <td>Action name: device/get</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>string</td>
+            <td>Operation execution status (success or error).</td>
+        </tr>
+        <tr>
+            <td>requestId</td>
+            <td>object</td>
+            <td>Request unique identifier as specified in the request message.</td>
+        </tr>
+        <tr>
+            <td>device</td>
+            <td>object</td>
+            <td>The <a href="#Reference/Device">Device</a> resource representing the current device.</td>
+        </tr>
+        <tr>
+            <td>device.id</td>
+            <td>string</td>
+            <td>Device unique identifier.</td>
+        </tr>
+        <tr>
+            <td>device.name</td>
+            <td>string</td>
+            <td>Device display name.</td>
+        </tr>
+        <tr>
+            <td>device.status</td>
+            <td>string</td>
+            <td>Device operation status.
+                The status is optional and it can be set to an arbitrary value, if applicable.
+                <p class="doc">If device status monitoring feature is enabled, the framework will set status value to &#39;Offline&#39; after defined period of inactivity.</p></td>
+        </tr>
+        <tr>
+            <td>device.data</td>
+            <td>object</td>
+            <td>Device data, a JSON object with an arbitrary structure.</td>
+        </tr>
+        <tr>
+            <td>device.networkId</td>
+            <td>integer</td>
+            <td>Network identifier.</td>
+        </tr>
+        <tr>
+            <td>device.isBlocked</td>
+            <td>boolean</td>
+            <td>Device isBlocked identifier.</td>
+        </tr>
+    </table>
+
+</div>
+    <div id="WsReference-Client-devicelist">
+
+
+
+
+        <h1>Client / Device: device/list</h1>
+
+        <p>Gets the list of devices.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Device</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: device/list</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>token</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Access JSON Web Token (specify if not authenticated).</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;devices&quot;</span>: [{
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>,
+    }]
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: device/list</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>devices</td>
+                <td>array</td>
+                <td>The array of devices.</td>
+            </tr>
+            <tr>
+                <td>device</td>
+                <td>object</td>
+                <td>The <a href="#Reference/Device">Device</a> resource representing the user device.</td>
+            </tr>
+            <tr>
+                <td>device.id</td>
+                <td>string</td>
+                <td>Device unique identifier.</td>
+            </tr>
+            <tr>
+                <td>device.name</td>
+                <td>string</td>
+                <td>Device display name.</td>
+            </tr>
+            <tr>
+                <td>device.status</td>
+                <td>string</td>
+                <td>Device operation status.
+                    The status is optional and it can be set to an arbitrary value, if applicable.
+                    <p class="doc">If device status monitoring feature is enabled, the framework will set status value to &#39;Offline&#39; after defined period of inactivity.</p></td>
+            </tr>
+            <tr>
+                <td>device.data</td>
+                <td>object</td>
+                <td>Device data, a JSON object with an arbitrary structure.</td>
+            </tr>
+            <tr>
+                <td>device.networkId</td>
+                <td>integer</td>
+                <td>Network identifier.</td>
+            </tr>
+            <tr>
+                <td>device.isBlocked</td>
+                <td>boolean</td>
+                <td>Device isBlocked identifier.</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="WsReference-Client-devicesave">
+
+
+
+
+        <h1>Client / Device: device/save</h1>
+
+        <p>Registers or updates a device.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Device</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;device&quot;</span>: {
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>
+    }
+}
+</pre>
+<h3>Message Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Required</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>action</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Action name: device/save</td>
+    </tr>
+    <tr>
+        <td>requestId</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Request unique identifier, will be passed back in the response message.</td>
+    </tr>
+    <tr>
+        <td>token</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Access JSON Web Token (specify if not authenticated).</td>
+    </tr>
+    <tr>
+        <td>deviceId</td>
+        <td>Yes</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>device</td>
+        <td>Yes</td>
+        <td>object</td>
+        <td>A <a href="#Reference/Device">Device</a> resource to register or update.</td>
+    </tr>
+    <tr>
+        <td>device.id</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Device unique identifier.</td>
+    </tr>
+    <tr>
+        <td>device.name</td>
+        <td>No</td>
+        <td>string</td>
+        <td>Device display name.</td>
+    </tr>
+    <tr>
+        <td>device.data</td>
+        <td>No</td>
+        <td>object</td>
+        <td>Device data, a JSON object with an arbitrary structure.</td>
+    </tr>
+    <tr>
+        <td>device.networkId</td>
+        <td>No</td>
+        <td>integer</td>
+        <td>Associated network id.</td>
+    </tr>
+    <tr>
+        <td>device.isBlocked</td>
+        <td>No</td>
+        <td>boolean</td>
+        <td>Indicates whether device is blocked.</td>
+    </tr>
+</table>
+
+<h2>Server Message</h2>
+
+<h3>Message Representation</h3>
+<pre>
+{
+<span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+<span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+<span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
+}
+</pre>
+
+
+<h3>Message Parameters</h3>
+<table>
+    <tr>
+        <th style="width:200px">Property Name</th>
+        <th style="width:80px">Type</th>
+        <th style="width:400px">Description</th>
+    </tr>
+    <tr>
+        <td>action</td>
+        <td>string</td>
+        <td>Action name: device/save</td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>string</td>
+        <td>Operation execution status (success or error).</td>
+    </tr>
+    <tr>
+        <td>requestId</td>
+        <td>object</td>
+        <td>Request unique identifier as specified in the request message.</td>
+    </tr>
+</table>
+
+    </div>
     <div id="WsReference-Client-notificationinsert">
         
 
 
 
-<h1>Client: notification/insert</h1>
+<h1>Client / Device: notification/insert</h1>
 
 <p>Creates new device notification on behalf of device.</p>
 
@@ -5982,7 +6421,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: notification/subscribe</h1>
+<h1>Client / Device: notification/subscribe</h1>
 
 <p>Subscribes to device notifications.
             After subscription is completed, the server will start to send notification/insert messages to the connected user.</p>
@@ -6102,7 +6541,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: notification/unsubscribe</h1>
+<h1>Client / Device : notification/unsubscribe</h1>
 
 <p>Unsubscribes from device notifications.</p>
 
@@ -6201,7 +6640,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: server/info</h1>
+<h1>Client / Device : server/info</h1>
 
 <p>Gets meta-information about the current API.</p>
 
@@ -6304,7 +6743,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: srv: command/insert</h1>
+<h1>Client / Device : srv: command/insert</h1>
 
 <p>Notifies the user about new device command.</p>
 
@@ -6412,7 +6851,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: srv: command/update</h1>
+<h1>Client / Device : srv: command/update</h1>
 
 <p>Notifies the user about a command has been processed by a device.
             These messages are sent only for commands created by the current user within the current connection.</p>
@@ -6503,7 +6942,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
 
 
-<h1>Client: srv: notification/insert</h1>
+<h1>Client / Device : srv: notification/insert</h1>
 
 <p>Notifies the user about new device notification.</p>
 
@@ -6576,1273 +7015,6 @@ The diagram below reflects all used resource types and their relationships:</p>
 </table>
 
     </div>
-    <div id="WsReference-Device">
-        
-
-
-
-<h1>Device</h1>
-
-<p><p class="doc">
-            The service allows devices to exchange messages with the DeviceHive server using a single persistent connection.
-            </p><p class="doc">
-            After connection is established, devices need to register using the device/save message,
-            perform authentication and then start sending notifications using the notification/insert message.
-            </p><p class="doc">
-            Devices may also subscribe to commands using the command/subscrive message
-            and then start receiving server-originated messages about new commands.
-            </p></p>
-
-<h2>WebSocket Handshake URI</h2>
-<pre class="uri">GET /device</pre>
-
-<h2>Messages</h2>
-<table>
-    <tr>
-        <th style="width:150px">Message</th>
-        <th style="width:80px">Originator</th>
-        <th style="width:100px">Authorization</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/authenticate">authenticate</a></td>
-        <td>Device</td>
-        <td>None</td>
-        <td>Authenticates a device.
-            After successful authentication, all subsequent messages may exclude JSON Web Token parameter.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/commandsubscribe">command/subscribe</a></td>
-        <td>Device</td>
-        <td>Access JSON Web Token (GetDeviceCommand)</td>
-        <td>Subscribes the device to commands.
-            After subscription is completed, the server will start to send command/insert messages to the connected device.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/commandunsubscribe">command/unsubscribe</a></td>
-        <td>Device</td>
-        <td>Access JSON Web Token (GetDeviceCommand)</td>
-        <td>Unsubscribes the device from commands.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/commandupdate">command/update</a></td>
-        <td>Device</td>
-        <td>Access JSON Web Token (UpdateDeviceCommand)</td>
-        <td>Updates an existing device command.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/deviceget">device/get</a></td>
-        <td>Device</td>
-        <td>Access JSON Web Token (GetDevice)</td>
-        <td>Gets information about the current device.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/devicesave">device/save</a></td>
-        <td>Device</td>
-        <td>Access JSON Web Token (RegisterDevice)</td>
-        <td>Registers or updates a device.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/notificationinsert">notification/insert</a></td>
-        <td>Device</td>
-        <td>Access JSON Web Token (CreateDeviceNotification)</td>
-        <td>Creates new device notification.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/serverinfo">server/info</a></td>
-        <td>Device</td>
-        <td>None</td>
-        <td>Gets meta-information of the current API.</td>
-    </tr>
-    <tr>
-        <td><a href="#WsReference/Device/srvcommandinsert">srv: command/insert</a></td>
-        <td>Server</td>
-        <td>n/a</td>
-        <td>Notifies the device about new command.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-authenticate">
-        
-
-
-
-<h1>Device: authenticate</h1>
-
-<p>Authenticates a device.
-            After successful authentication, all subsequent messages may exclude JSON Web Token parameter.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>None</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: authenticate</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Access JSON Web Token.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: authenticate</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-commandsubscribe">
-        
-
-
-
-<h1>Device: command/subscribe</h1>
-
-<p>Subscribes the device to commands.
-            After subscription is completed, the server will start to send command/insert messages to the connected device.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
-    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
-    <span class="green">&quot;names&quot;</span>: <span class="blue">{array}</span>
-    <span class="green">&quot;limit&quot;</span>: <span class="blue">{integer}</span>
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: command/subscribe</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-    <tr>
-        <td>timestamp</td>
-        <td>No</td>
-        <td>datetime</td>
-        <td>Timestamp of the last received command (UTC). If not specified, the server&#39;s timestamp is taken instead.</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>No</td>
-        <td>string</td>
-        <td>A unique device identifier to subscribe to. If not specified, used deviceIds, otherwise the subscription is made to all accessible devices.</td>
-    </tr>
-    <tr>
-        <td>deviceIds</td>
-        <td>No</td>
-        <td>array</td>
-        <td>Array of device unique identifiers to subscribe to. If not specified, used deviceId, otherwise the subscription is made to all accessible devices.</td>
-    </tr>
-    <tr>
-        <td>names</td>
-        <td>No</td>
-        <td>array</td>
-        <td>Array of command names to subscribe to.</td>
-    </tr>
-    <tr>
-        <td>limit</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Limits the number of commands for a subscription.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: command/subscribe</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-commandunsubscribe">
-        
-
-
-
-<h1>Device: command/unsubscribe</h1>
-
-<p>Unsubscribes the device from commands.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;subscriptionId&quot;</span>: <span class="blue">{guid}</span>
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: command/unsubscribe</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-    <tr>
-        <td>subscriptionId</td>
-        <td>No</td>
-        <td>guid</td>
-        <td>An identifier of the previously made subscription to unsubscribe from.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: command/unsubscribe</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-commandupdate">
-        
-
-
-
-<h1>Device: command/update</h1>
-
-<p>Updates an existing device command.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;commandId&quot;</span>: <span class="blue">{integer}</span>,
-    <span class="green">&quot;command&quot;</span>: {
-        <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
-        <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>
-    }
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: command/update</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-    <tr>
-        <td>commandId</td>
-        <td>Yes</td>
-        <td>integer</td>
-        <td>Device command identifier.</td>
-    </tr>
-    <tr>
-        <td>command</td>
-        <td>Yes</td>
-        <td>object</td>
-        <td>A <a href="#Reference/DeviceCommand">DeviceCommand</a> resource to update.</td>
-    </tr>
-    <tr>
-        <td>command.command</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Command name.</td>
-    </tr>
-    <tr>
-        <td>command.parameters</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Command parameters, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>command.lifetime</td>
-        <td>No</td>
-        <td>integer</td>
-        <td>Command lifetime, a number of seconds until this command expires.</td>
-    </tr>
-    <tr>
-        <td>command.status</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Command status, as reported by device or related infrastructure.</td>
-    </tr>
-    <tr>
-        <td>command.result</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Command execution result, an optional value that could be provided by device.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: command/update</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-deviceget">
-        
-
-
-
-<h1>Device: device/get</h1>
-
-<p>Gets information about the current device.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: device/get</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Device unique identifier, if not specified the device for the principal will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;device&quot;</span>: {
-        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
-        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>
-    }
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: device/get</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-    <tr>
-        <td>device</td>
-        <td>object</td>
-        <td>The <a href="#Reference/Device">Device</a> resource representing the current device.</td>
-    </tr>
-    <tr>
-        <td>device.id</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>device.name</td>
-        <td>string</td>
-        <td>Device display name.</td>
-    </tr>
-    <tr>
-        <td>device.status</td>
-        <td>string</td>
-        <td>Device operation status.
-            The status is optional and it can be set to an arbitrary value, if applicable.
-            <p class="doc">If device status monitoring feature is enabled, the framework will set status value to &#39;Offline&#39; after defined period of inactivity.</p></td>
-    </tr>
-    <tr>
-        <td>device.data</td>
-        <td>object</td>
-        <td>Device data, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>device.networkId</td>
-        <td>integer</td>
-        <td>Network identifier.</td>
-    </tr>
-    <tr>
-        <td>device.isBlocked</td>
-        <td>boolean</td>
-        <td>Device isBlocked identifier.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-devicelist">
-
-
-
-
-<h1>Device: device/list</h1>
-
-<p>Gets the list of devices.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: device/list</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;devices&quot;</span>: [{
-        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
-        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>,
-    }]
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: device/list</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>devices</td>
-        <td>array</td>
-        <td>The array of devices.</td>
-    </tr>
-    <tr>
-        <td>device</td>
-        <td>object</td>
-        <td>The <a href="#Reference/Device">Device</a> resource representing the user device.</td>
-    </tr>
-    <tr>
-        <td>device.id</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>device.name</td>
-        <td>string</td>
-        <td>Device display name.</td>
-    </tr>
-    <tr>
-        <td>device.status</td>
-        <td>string</td>
-        <td>Device operation status.
-            The status is optional and it can be set to an arbitrary value, if applicable.
-            <p class="doc">If device status monitoring feature is enabled, the framework will set status value to &#39;Offline&#39; after defined period of inactivity.</p></td>
-    </tr>
-    <tr>
-        <td>device.data</td>
-        <td>object</td>
-        <td>Device data, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>device.networkId</td>
-        <td>integer</td>
-        <td>Network identifier.</td>
-    </tr>
-    <tr>
-        <td>device.isBlocked</td>
-        <td>boolean</td>
-        <td>Device isBlocked identifier.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-devicesave">
-        
-
-
-
-<h1>Device: device/save</h1>
-
-<p>Registers or updates a device.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;device&quot;</span>: {
-        <span class="green">&quot;id&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;data&quot;</span>: <span class="blue">{object}</span>,
-        <span class="green">&quot;networkId&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;isBlocked&quot;</span>: <span class="blue">{boolean}</span>
-    }
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: device/save</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>device</td>
-        <td>Yes</td>
-        <td>object</td>
-        <td>A <a href="#Reference/Device">Device</a> resource to register or update.</td>
-    </tr>
-    <tr>
-        <td>device.id</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>device.name</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Device display name.</td>
-    </tr>
-    <tr>
-        <td>device.data</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Device data, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>device.networkId</td>
-        <td>No</td>
-        <td>integer</td>
-        <td>Associated network id.</td>
-    </tr>
-    <tr>
-        <td>device.isBlocked</td>
-        <td>No</td>
-        <td>boolean</td>
-        <td>Indicates whether device is blocked.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: device/save</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-notificationinsert">
-        
-
-
-
-<h1>Device: notification/insert</h1>
-
-<p>Creates new device notification.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>Device</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;token&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;notification&quot;</span>: {
-        <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>
-    }
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: notification/insert</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Device unique identifier, if not specified the device for the principal will be passed back in the response message.</td>
-    </tr>
-    <tr>
-        <td>token</td>
-        <td>No</td>
-        <td>string</td>
-        <td>Access JSON Web Token (specify if not authenticated).</td>
-    </tr>
-    <tr>
-        <td>notification</td>
-        <td>Yes</td>
-        <td>object</td>
-        <td>A <a href="#Reference/DeviceNotification">DeviceNotification</a> resource to create.</td>
-    </tr>
-    <tr>
-        <td>notification.notification</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Notification name.</td>
-    </tr>
-    <tr>
-        <td>notification.parameters</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Notification parameters, a JSON object with an arbitrary structure.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;notification&quot;</span>: {
-        <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>
-    }
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: notification/insert</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-    <tr>
-        <td>notification</td>
-        <td>object</td>
-        <td>An inserted <a href="#Reference/DeviceNotification">DeviceNotification</a> resource.</td>
-    </tr>
-    <tr>
-        <td>notification.id</td>
-        <td>integer</td>
-        <td>Notification identifier.</td>
-    </tr>
-    <tr>
-        <td>notification.timestamp</td>
-        <td>datetime</td>
-        <td>Notification timestamp (UTC).</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-serverinfo">
-        
-
-
-
-<h1>Device: server/info</h1>
-
-<p>Gets meta-information of the current API.</p>
-
-<h2>Request Message</h2>
-<h3>Authorization</h3>
-<p>None</p>
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
-}
-</pre>
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Required</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>Yes</td>
-        <td>string</td>
-        <td>Action name: server/info</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>No</td>
-        <td>object</td>
-        <td>Request unique identifier, will be passed back in the response message.</td>
-    </tr>
-</table>
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
-    <span class="green">&quot;info&quot;</span>: {
-        <span class="green">&quot;apiVersion&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;serverTimestamp&quot;</span>: <span class="blue">{datetime}</span>,
-        <span class="green">&quot;restServerUrl&quot;</span>: <span class="blue">{string}</span>
-    }
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: server/info</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Operation execution status (success or error).</td>
-    </tr>
-    <tr>
-        <td>requestId</td>
-        <td>object</td>
-        <td>Request unique identifier as specified in the request message.</td>
-    </tr>
-    <tr>
-        <td>info</td>
-        <td>object</td>
-        <td>The <a href="#Reference/ApiInfo">ApiInfo</a> resource.</td>
-    </tr>
-    <tr>
-        <td>info.apiVersion</td>
-        <td>string</td>
-        <td>API version.</td>
-    </tr>
-    <tr>
-        <td>info.serverTimestamp</td>
-        <td>datetime</td>
-        <td>Current server timestamp.</td>
-    </tr>
-    <tr>
-        <td>info.restServerUrl</td>
-        <td>string</td>
-        <td>REST server URL.</td>
-    </tr>
-</table>
-
-    </div>
-    <div id="WsReference-Device-srvcommandinsert">
-        
-
-
-
-<h1>Device: srv: command/insert</h1>
-
-<p>Notifies the device about new command.</p>
-
-
-<h2>Server Message</h2>
-
-<h3>Message Representation</h3>
-<pre>
-{
-    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;command&quot;</span>: {
-        <span class="green">&quot;id&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
-        <span class="green">&quot;userId&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
-        <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
-        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
-        <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>
-    }
-}
-</pre>
-
-
-<h3>Message Parameters</h3>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>action</td>
-        <td>string</td>
-        <td>Action name: command/insert</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>command</td>
-        <td>object</td>
-        <td>A <a href="#Reference/DeviceCommand">DeviceCommand</a> resource representing the command.</td>
-    </tr>
-    <tr>
-        <td>command.id</td>
-        <td>integer</td>
-        <td>Command identifier.</td>
-    </tr>
-    <tr>
-        <td>command.timestamp</td>
-        <td>datetime</td>
-        <td>Command timestamp (UTC).</td>
-    </tr>
-    <tr>
-        <td>command.userId</td>
-        <td>integer</td>
-        <td>Associated user identifier.</td>
-    </tr>
-    <tr>
-        <td>command.deviceId</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>command.command</td>
-        <td>string</td>
-        <td>Command name.</td>
-    </tr>
-    <tr>
-        <td>command.parameters</td>
-        <td>object</td>
-        <td>Command parameters, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>command.lifetime</td>
-        <td>integer</td>
-        <td>Command lifetime, a number of seconds until this command expires.</td>
-    </tr>
-    <tr>
-        <td>command.status</td>
-        <td>string</td>
-        <td>Command status, as reported by device or related infrastructure.</td>
-    </tr>
-    <tr>
-        <td>command.result</td>
-        <td>object</td>
-        <td>Command execution result, an optional value that could be provided by device.</td>
-    </tr>
-</table>
-
-    </div>
-</div>
 <script type="text/javascript">
     jQuery(function () {
         if ("onhashchange" in window) {
