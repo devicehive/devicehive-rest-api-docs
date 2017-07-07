@@ -2423,11 +2423,6 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
     <tr>
-        <td>command</td>
-        <td>string</td>
-        <td>Command name.</td>
-    </tr>
-    <tr>
         <td>timestamp</td>
         <td>datetime</td>
         <td>Command timestamp (UTC).</td>
@@ -2436,41 +2431,6 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>userId</td>
         <td>integer</td>
         <td>Associated user identifier.</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>parameters</td>
-        <td>object</td>
-        <td>Command parameters, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>lifetime</td>
-        <td>integer</td>
-        <td>Command lifetime, a number of seconds until this command expires.</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Command status, as reported by device or related infrastructure.</td>
-    </tr>
-    <tr>
-        <td>result</td>
-        <td>object</td>
-        <td>Command execution result, an optional value that could be provided by device.</td>
-    </tr>
-    <tr>
-        <td>isUpdated</td>
-        <td>boolean</td>
-        <td>Indicates, if command was updated.</td>
-    </tr>
-    <tr>
-        <td>hazelcastKey</td>
-        <td>string</td>
-        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
@@ -2561,69 +2521,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 </table>
     
 <h2>Response</h2>
-<p>If successful, this method returns a <a href="#Reference/DeviceCommand">DeviceCommand</a> resource in the response body.</p>
-<table>
-    <tr>
-        <th style="width:200px">Property Name</th>
-        <th style="width:80px">Type</th>
-        <th style="width:400px">Description</th>
-    </tr>
-    <tr>
-        <td>id</td>
-        <td>integer</td>
-        <td>Command identifier.</td>
-    </tr>
-    <tr>
-        <td>command</td>
-        <td>string</td>
-        <td>Command name.</td>
-    </tr>
-    <tr>
-        <td>timestamp</td>
-        <td>datetime</td>
-        <td>Command timestamp (UTC).</td>
-    </tr>
-    <tr>
-        <td>userId</td>
-        <td>integer</td>
-        <td>Associated user identifier.</td>
-    </tr>
-    <tr>
-        <td>deviceId</td>
-        <td>string</td>
-        <td>Device unique identifier.</td>
-    </tr>
-    <tr>
-        <td>parameters</td>
-        <td>object</td>
-        <td>Command parameters, a JSON object with an arbitrary structure.</td>
-    </tr>
-    <tr>
-        <td>lifetime</td>
-        <td>integer</td>
-        <td>Command lifetime, a number of seconds until this command expires.</td>
-    </tr>
-    <tr>
-        <td>status</td>
-        <td>string</td>
-        <td>Command status, as reported by device or related infrastructure.</td>
-    </tr>
-    <tr>
-        <td>result</td>
-        <td>object</td>
-        <td>Command execution result, an optional value that could be provided by device.</td>
-    </tr>
-    <tr>
-        <td>isUpdated</td>
-        <td>boolean</td>
-        <td>Indicates, if command was updated.</td>
-    </tr>
-    <tr>
-        <td>hazelcastKey</td>
-        <td>string</td>
-        <td>Record unique identifier in the in-memory DB.</td>
-    </tr>
-</table>
+<p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-DeviceCommand-poll">
@@ -5883,7 +5781,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         </tr>
         <tr>
             <td>deviceId</td>
-            <td>No</td>
+            <td>Yes</td>
             <td>string</td>
             <td>Device unique identifier, if not specified the device for the principal will be passed back in the response message.</td>
         </tr>
