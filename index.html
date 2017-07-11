@@ -5885,7 +5885,15 @@ The diagram below reflects all used resource types and their relationships:</p>
         <pre>
 {
     <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
-    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;namePattern&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;networkId&quot;</span>: <span class="blue">{long}</span>,
+    <span class="green">&quot;networkName&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;sortField&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;sortOrder&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;take&quot;</span>: <span class="blue">{integer}</span>,
+    <span class="green">&quot;skip&quot;</span>: <span class="blue">{integer}</span>
 }
 </pre>
         <h3>Message Parameters</h3>
@@ -5907,6 +5915,54 @@ The diagram below reflects all used resource types and their relationships:</p>
                 <td>No</td>
                 <td>object</td>
                 <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Filter by device name.</td>
+            </tr>
+            <tr>
+                <td>namePattern</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Filter by device name pattern. In pattern wildcards '%' and '_' can be used.</td>
+            </tr>
+            <tr>
+                <td>networkId</td>
+                <td>No</td>
+                <td>long</td>
+                <td>Filter by associated network identifier.</td>
+            </tr>
+            <tr>
+                <td>networkName</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Filter by associated network name.</td>
+            </tr>
+            <tr>
+                <td>sortField</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Result list sort field. Available values are Name and Network.</td>
+            </tr>
+            <tr>
+                <td>sortOrder</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Result list sort order. Available values are ASC and DESC. The sortField should be specified.</td>
+            </tr>
+            <tr>
+                <td>take</td>
+                <td>No</td>
+                <td>integer</td>
+                <td>Number of records to take from the result list.</td>
+            </tr>
+            <tr>
+                <td>skip</td>
+                <td>No</td>
+                <td>integer</td>
+                <td>Number of records to skip from the result list.</td>
             </tr>
         </table>
 
