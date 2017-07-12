@@ -93,6 +93,8 @@
                 <li><a href="#WsReference/Client">Client / Device</a>
                     <ul id="nav-WsReference-Client">
                         <li><a href="#WsReference/Client/authenticate">authenticate</a></li>
+                        <li><a href="#WsReference/Client/commandget">command/get</a></li>
+                        <li><a href="#WsReference/Client/commandlist">command/list</a></li>
                         <li><a href="#WsReference/Client/commandinsert">command/insert</a></li>
                         <li><a href="#WsReference/Client/commandsubscribe">command/subscribe</a></li>
                         <li><a href="#WsReference/Client/commandunsubscribe">command/unsubscribe</a></li>
@@ -100,6 +102,8 @@
                         <li><a href="#WsReference/Client/deviceget">device/get</a></li>
                         <li><a href="#WsReference/Client/devicelist">device/list</a></li>
                         <li><a href="#WsReference/Client/devicesave">device/save</a></li>
+                        <li><a href="#WsReference/Client/notificationget">notification/get</a></li>
+                        <li><a href="#WsReference/Client/notificationlist">notification/list</a></li>
                         <li><a href="#WsReference/Client/notificationinsert">notification/insert</a></li>
                         <li><a href="#WsReference/Client/notificationsubscribe">notification/subscribe</a></li>
                         <li><a href="#WsReference/Client/notificationunsubscribe">notification/unsubscribe</a></li>
@@ -5052,6 +5056,18 @@ The diagram below reflects all used resource types and their relationships:</p>
             all subsequent messages may exclude JSON Web Token parameter.</td>
     </tr>
     <tr>
+        <td><a href="#WsReference/Client/commandget">command/get</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (GetDeviceCommand)</td>
+        <td>Gets information about the command.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/commandlist">command/list</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (GetDeviceCommand)</td>
+        <td>Gets the list of commands.</td>
+    </tr>
+    <tr>
         <td><a href="#WsReference/Client/commandinsert">command/insert</a></td>
         <td>Client / Device</td>
         <td>Access JSON Web Token (CreateDeviceCommand)</td>
@@ -5093,6 +5109,18 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Client / Device</td>
         <td>Access JSON Web Token (RegisterDevice)</td>
         <td>Registers or updates a device.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/notificationget">notification/get</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (GetDeviceNotification)</td>
+        <td>Gets information about the notification.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/notificationlist">notification/list</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (GetDeviceNotification)</td>
+        <td>Gets the list of notifications.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/notificationinsert">notification/insert</a></td>
@@ -5225,6 +5253,363 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Request unique identifier as specified in the request message.</td>
     </tr>
 </table>
+
+    </div>
+    <div id="WsReference-Client-commandget">
+
+        <h1>Client / Device: command/get</h1>
+
+        <p>Gets information about the command.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (GetDeviceCommand)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;commandId&quot;</span>: <span class="blue">{long}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: command/get</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>deviceId</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Device unique identifier.</td>
+            </tr>
+            <tr>
+                <td>commandId</td>
+                <td>Yes</td>
+                <td>long</td>
+                <td>Command unique identifier.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;command&quot;</span>: {
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{long}</span>,
+        <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
+        <span class="green">&quot;userId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>
+    }
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: command/get</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>command</td>
+                <td>object</td>
+                <td>An inserted <a href="#Reference/DeviceCommand">DeviceCommand</a> resource.</td>
+            </tr>
+            <tr>
+                <td>command.id</td>
+                <td>long</td>
+                <td>Command identifier.</td>
+            </tr>
+            <tr>
+                <td>command.command</td>
+                <td>string</td>
+                <td>Command name.</td>
+            </tr>
+            <tr>
+                <td>command.timestamp</td>
+                <td>datetime</td>
+                <td>Command timestamp (UTC).</td>
+            </tr>
+            <tr>
+                <td>command.userId</td>
+                <td>integer</td>
+                <td>Associated user identifier.</td>
+            </tr>
+            <tr>
+                <td>command.deviceId</td>
+                <td>string</td>
+                <td>Associated device identifier.</td>
+            </tr>
+            <tr>
+                <td>command.parameters</td>
+                <td>object</td>
+                <td>Command parameters, a JSON object with an arbitrary structure.</td>
+            </tr>
+            <tr>
+                <td>command.lifetime</td>
+                <td>integer</td>
+                <td>Command lifetime, a number of seconds until this command expires.</td>
+            </tr>
+            <tr>
+                <td>command.status</td>
+                <td>string</td>
+                <td>Command status, as reported by device or related infrastructure.</td>
+            </tr>
+            <tr>
+                <td>command.result</td>
+                <td>object</td>
+                <td>Command execution result, an optional value that could be provided by device.</td>
+            </tr>
+        </table>
+    </div>
+    <div id="WsReference-Client-commandlist">
+
+
+
+
+        <h1>Client / Device: command/list</h1>
+
+        <p>Gets the list of devices.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (GetDeviceCommand)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;start&quot;</span>: <span class="blue">{datetime}</span>,
+    <span class="green">&quot;end&quot;</span>: <span class="blue">{datetime}</span>,
+    <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;sortField&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;sortOrder&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;take&quot;</span>: <span class="blue">{integer}</span>,
+    <span class="green">&quot;skip&quot;</span>: <span class="blue">{integer}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: device/list</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>deviceId</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Device unique identifier.</td>
+            </tr>
+            <tr>
+                <td>start</td>
+                <td>No</td>
+                <td>datetime</td>
+                <td>Start timestamp to filter commands.</td>
+            </tr>
+            <tr>
+                <td>end</td>
+                <td>No</td>
+                <td>datetime</td>
+                <td>End timestamp to filter commands.</td>
+            </tr>
+            <tr>
+                <td>command</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Filter by comand name.</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Filter by command status.</td>
+            </tr>
+            <tr>
+                <td>sortField</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Result list sort field.</td>
+            </tr>
+            <tr>
+                <td>sortOrder</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Result list sort order. Available values are ASC and DESC. The sortField should be specified.</td>
+            </tr>
+            <tr>
+                <td>take</td>
+                <td>No</td>
+                <td>integer</td>
+                <td>Number of records to take from the result list. If not specified 100 records will be taken.</td>
+            </tr>
+            <tr>
+                <td>skip</td>
+                <td>No</td>
+                <td>integer</td>
+                <td>Number of records to skip from the result list. If not specified 0 records will be skipped.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;commands&quot;</span>: [{
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{long}</span>,
+        <span class="green">&quot;command&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
+        <span class="green">&quot;userId&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;lifetime&quot;</span>: <span class="blue">{integer}</span>,
+        <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>
+    }]
+            
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: device/list</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>commands</td>
+                <td>array</td>
+                <td>The array of commands.</td>
+            </tr>
+            <tr>
+                <td>command</td>
+                <td>object</td>
+                <td>An inserted <a href="#Reference/DeviceCommand">DeviceCommand</a> resource.</td>
+            </tr>
+            <tr>
+                <td>command.id</td>
+                <td>long</td>
+                <td>Command identifier.</td>
+            </tr>
+            <tr>
+                <td>command.command</td>
+                <td>string</td>
+                <td>Command name.</td>
+            </tr>
+            <tr>
+                <td>command.timestamp</td>
+                <td>datetime</td>
+                <td>Command timestamp (UTC).</td>
+            </tr>
+            <tr>
+                <td>command.userId</td>
+                <td>integer</td>
+                <td>Associated user identifier.</td>
+            </tr>
+            <tr>
+                <td>command.deviceId</td>
+                <td>string</td>
+                <td>Associated device identifier.</td>
+            </tr>
+            <tr>
+                <td>command.parameters</td>
+                <td>object</td>
+                <td>Command parameters, a JSON object with an arbitrary structure.</td>
+            </tr>
+            <tr>
+                <td>command.lifetime</td>
+                <td>integer</td>
+                <td>Command lifetime, a number of seconds until this command expires.</td>
+            </tr>
+            <tr>
+                <td>command.status</td>
+                <td>string</td>
+                <td>Command status, as reported by device or related infrastructure.</td>
+            </tr>
+            <tr>
+                <td>command.result</td>
+                <td>object</td>
+                <td>Command execution result, an optional value that could be provided by device.</td>
+            </tr>
+        </table>
 
     </div>
     <div id="WsReference-Client-commandinsert">
@@ -6172,6 +6557,308 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Request unique identifier as specified in the request message.</td>
     </tr>
 </table>
+
+    </div>
+    <div id="WsReference-Client-notificationget">
+
+        <h1>Client / Device: notification/get</h1>
+
+        <p>Gets information about the notification.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (GetDeviceNotification)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;notificationId&quot;</span>: <span class="blue">{long}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: notification/get</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>deviceId</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Device unique identifier.</td>
+            </tr>
+            <tr>
+                <td>notificationId</td>
+                <td>Yes</td>
+                <td>long</td>
+                <td>Notification unique identifier.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;notification&quot;</span>: {
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{long}</span>,
+        <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
+        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>
+    }
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: notification/get</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>notification</td>
+                <td>object</td>
+                <td>An inserted <a href="#Reference/DeviceNotification">DeviceNotification</a> resource.</td>
+            </tr>
+            <tr>
+                <td>notification.id</td>
+                <td>long</td>
+                <td>Notification identifier.</td>
+            </tr>
+            <tr>
+                <td>notification.notification</td>
+                <td>string</td>
+                <td>Notification name.</td>
+            </tr>
+            <tr>
+                <td>notification.timestamp</td>
+                <td>datetime</td>
+                <td>Notification timestamp (UTC).</td>
+            </tr>
+            <tr>
+                <td>notification.deviceId</td>
+                <td>string</td>
+                <td>Associated device identifier.</td>
+            </tr>
+            <tr>
+                <td>notification.parameters</td>
+                <td>object</td>
+                <td>Notification parameters, a JSON object with an arbitrary structure.</td>
+            </tr>
+        </table>
+    </div>
+    <div id="WsReference-Client-notificationlist">
+
+
+
+
+        <h1>Client / Device: notification/list</h1>
+
+        <p>Gets the list of devices.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (GetDeviceNotification)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;start&quot;</span>: <span class="blue">{datetime}</span>,
+    <span class="green">&quot;end&quot;</span>: <span class="blue">{datetime}</span>,
+    <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;sortField&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;sortOrder&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;take&quot;</span>: <span class="blue">{integer}</span>,
+    <span class="green">&quot;skip&quot;</span>: <span class="blue">{integer}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: device/list</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>deviceId</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Device unique identifier.</td>
+            </tr>
+            <tr>
+                <td>start</td>
+                <td>No</td>
+                <td>datetime</td>
+                <td>Start timestamp to filter notifications.</td>
+            </tr>
+            <tr>
+                <td>end</td>
+                <td>No</td>
+                <td>datetime</td>
+                <td>End timestamp to filter notifications.</td>
+            </tr>
+            <tr>
+                <td>notification</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Filter by comand name.</td>
+            </tr>
+            <tr>
+                <td>sortField</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Result list sort field.</td>
+            </tr>
+            <tr>
+                <td>sortOrder</td>
+                <td>No</td>
+                <td>string</td>
+                <td>Result list sort order. Available values are ASC and DESC. The sortField should be specified.</td>
+            </tr>
+            <tr>
+                <td>take</td>
+                <td>No</td>
+                <td>integer</td>
+                <td>Number of records to take from the result list. If not specified 100 records will be taken.</td>
+            </tr>
+            <tr>
+                <td>skip</td>
+                <td>No</td>
+                <td>integer</td>
+                <td>Number of records to skip from the result list. If not specified 0 records will be skipped.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;notifications&quot;</span>: [{
+        <span class="green">&quot;id&quot;</span>: <span class="blue">{long}</span>,
+        <span class="green">&quot;notification&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;timestamp&quot;</span>: <span class="blue">{datetime}</span>,
+        <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>
+    }]
+            
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: device/list</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>notifications</td>
+                <td>array</td>
+                <td>The array of notifications.</td>
+            </tr>
+            <tr>
+                <td>notification</td>
+                <td>object</td>
+                <td>An inserted <a href="#Reference/DeviceNotification">DeviceNotification</a> resource.</td>
+            </tr>
+            <tr>
+                <td>notification.id</td>
+                <td>long</td>
+                <td>Notification identifier.</td>
+            </tr>
+            <tr>
+                <td>notification.notification</td>
+                <td>string</td>
+                <td>Notification name.</td>
+            </tr>
+            <tr>
+                <td>notification.timestamp</td>
+                <td>datetime</td>
+                <td>Notification timestamp (UTC).</td>
+            </tr>
+            <tr>
+                <td>notification.deviceId</td>
+                <td>string</td>
+                <td>Associated device identifier.</td>
+            </tr>
+            <tr>
+                <td>notification.parameters</td>
+                <td>object</td>
+                <td>Notification parameters, a JSON object with an arbitrary structure.</td>
+            </tr>
+        </table>
 
     </div>
     <div id="WsReference-Client-notificationinsert">
