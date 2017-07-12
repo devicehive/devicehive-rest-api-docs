@@ -108,6 +108,9 @@
                         <li><a href="#WsReference/Client/notificationsubscribe">notification/subscribe</a></li>
                         <li><a href="#WsReference/Client/notificationunsubscribe">notification/unsubscribe</a></li>
                         <li><a href="#WsReference/Client/serverinfo">server/info</a></li>
+                        <li><a href="#WsReference/Client/token">token</a></li>
+                        <li><a href="#WsReference/Client/tokencreate">token/create</a></li>
+                        <li><a href="#WsReference/Client/tokenrefresh">token/refresh</a></li>
                         <li><a href="#WsReference/Client/srvcommandinsert">srv: command/insert</a></li>
                         <li><a href="#WsReference/Client/srvcommandupdate">srv: command/update</a></li>
                         <li><a href="#WsReference/Client/srvnotificationinsert">srv: notification/insert</a></li>
@@ -119,7 +122,7 @@
 </div>
 <div id="content" class="column" role="main">
     <div id="GetStarted">
-        
+
 
 <h1>Get Started</h1>
 
@@ -927,7 +930,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>User password.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a pair of access and refresh tokens.</p>
 <table>
@@ -993,33 +996,48 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>A collection of allowed actions.
             Available values:
             <ul class="doc">
-  <li class="doc">
-    GetNetwork: get information about network
-  </li>
-  <li class="doc">
-    GetDevice: get information about device and device class
-  </li>
-  <li class="doc">
-    GetDeviceState: get information about current device equipment state
-  </li>
-  <li class="doc">
-    GetDeviceNotification: get or subscribe to device notifications
-  </li>
-  <li class="doc">
-    GetDeviceCommand: get or subscribe to commands sent to device
-  </li>
-  <li class="doc">
-    RegisterDevice: register a device
-  </li>
-  <li class="doc">
-    CreateDeviceNotification: post notifications on behalf of device
-  </li>
-  <li class="doc">
-    CreateDeviceCommand: post commands to device
-  </li>
-  <li class="doc">
-    UpdateDeviceCommand: update status of commands on behalf of device
-  </li>
+                <li class="doc">
+                    GetNetwork: get information about network
+                </li>
+                <li class="doc">
+                    GetDevice: get information about device and device class
+                </li>
+                <li class="doc">
+                    GetDeviceNotification: get or subscribe to device notifications
+                </li>
+                <li class="doc">
+                    GetDeviceCommand: get or subscribe to commands sent to device
+                </li>
+                <li class="doc">
+                    RegisterDevice: register a device
+                </li>
+                <li class="doc">
+                    CreateDeviceNotification: post notifications on behalf of device
+                </li>
+                <li class="doc">
+                    CreateDeviceCommand: post commands to device
+                </li>
+                <li class="doc">
+                    UpdateDeviceCommand: update status of commands on behalf of device
+                </li>
+                <li class="doc">
+                    GetCurrentUser: get current user info
+                </li>
+                <li class="doc">
+                    UpdateCurrentUser: update current user
+                </li>
+                <li class="doc">
+                    ManageUser: admin permission for managing all users
+                </li>
+                <li class="doc">
+                    ManageConfiguration: admin permission for managing server configuration
+                </li>
+                <li class="doc">
+                    ManageNetwork: admin permission for managing all networks and its devices
+                </li>
+                <li class="doc">
+                    ManageToken: admin permission for creating tokens
+                </li>
 </ul></td>
     </tr>
     <tr>
@@ -1039,7 +1057,7 @@ The diagram below reflects all used resource types and their relationships:</p>
             Set to null to allow callees to access all devices permitted for the owner user.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a pair of access and refresh tokens.</p>
 <table>
@@ -1062,7 +1080,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Authentication-refresh">
-        
+
 
 
 
@@ -1070,13 +1088,13 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Creates new access token for the given refresh token.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">POST /token/refresh</pre>
 
 <h3>Authorization</h3>
 <p>None</p>
-    
+
 <h3>Request Body</h3>
 <p>In the request body, supply a refresh JSON Web Token.</p>
 <table>
@@ -1093,7 +1111,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Refresh JSON Web Token.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an access JSON Web Token in the response body.</p>
 <table>
@@ -1111,7 +1129,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-ApiInfo">
-        
+
 
 
 
@@ -1173,7 +1191,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-ApiInfo-get">
-        
+
 
 
 
@@ -1181,17 +1199,17 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets meta-information of the current API.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /info</pre>
-    
-    
+
+
 <h3>Authorization</h3>
 <p>None</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/ApiInfo">ApiInfo</a> resource in the response body.</p>
 <table>
@@ -1219,7 +1237,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-ApiInfo-getCluster">
-        
+
 
 
 
@@ -1227,17 +1245,17 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Returns information about cluster (Kafka, Zookeeper etc.)</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /info/config/cluster</pre>
-    
-    
+
+
 <h3>Authorization</h3>
 <p>None</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a cluster information in the response body.</p>
 <table>
@@ -1260,7 +1278,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
         <div id="Reference-Configuration">
-        
+
 
 
 
@@ -1328,7 +1346,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Configuration-get">
-        
+
 
 
 
@@ -1336,10 +1354,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Returns requested property value.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /configuration/{name}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1355,13 +1373,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Configuration parameter name.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>JSON Web Token (ManageConfiguration)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/Configuration">Configuration</a> resource in the response body.</p>
 <table>
@@ -1389,7 +1407,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Configuration-put">
-        
+
 
 
 
@@ -1397,10 +1415,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Creates new or updates existing property.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /configuration/{name}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1416,13 +1434,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Configuration parameter name.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>JSON Web Token (ManageConfiguration)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/Configuration">Configuration</a> resource in the response body.</p>
 <table>
@@ -1450,7 +1468,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Configuration-delete">
-        
+
 
 
 
@@ -1458,10 +1476,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Deletes a property.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">DELETE /configuration/{name}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1477,19 +1495,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Configuration parameter name.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>JSON Web Token (ManageConfiguration)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-Device">
-        
+
 
 
 
@@ -1575,7 +1593,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Device-list">
-        
+
 
 
 
@@ -1583,10 +1601,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets list of devices.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1644,13 +1662,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Number of records to skip from the result list.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDevice)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/Device">Device</a> resources in the response body.</p>
 <table>
@@ -1688,7 +1706,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Device-get">
-        
+
 
 
 
@@ -1696,10 +1714,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets information about device.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1715,13 +1733,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDevice)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/Device">Device</a> resource in the response body.</p>
 <table>
@@ -1759,7 +1777,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Device-register">
-        
+
 
 
 
@@ -1767,10 +1785,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Registers or updates a device. For initial device registration, only &#39;name&#39; and &#39;deviceClass&#39; properties are required.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /device/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1786,7 +1804,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (RegisterDevice)</p>
 
@@ -1824,13 +1842,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Indicates whether device is blocked.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-Device-delete">
-        
+
 
 
 
@@ -1838,10 +1856,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Deletes an existing device.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">DELETE /device/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1857,19 +1875,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (RegisterDevice)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-Device-equipment">
-        
+
 
 
 
@@ -1878,10 +1896,10 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <ul class="doc"><li class="doc">equipment: equipment code</li><li class="doc">parameters: current equipment state</li></ul></p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{id}/equipment</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -1897,13 +1915,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of the following structures in the response body.</p>
 <table>
@@ -1931,7 +1949,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand">
-        
+
 
 
 
@@ -2079,7 +2097,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand-query">
-        
+
 
 
 
@@ -2087,10 +2105,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Queries device commands.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/command</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2154,13 +2172,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Number of records to skip from the result list.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceCommand)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/DeviceCommand">DeviceCommand</a> resources in the response body.</p>
 <table>
@@ -2228,7 +2246,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand-get">
-        
+
 
 
 
@@ -2236,10 +2254,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets information about device command.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/command/{commandId}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2261,13 +2279,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceCommand)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/DeviceCommand">DeviceCommand</a> resource in the response body.</p>
 <table>
@@ -2335,7 +2353,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand-insert">
-        
+
 
 
 
@@ -2343,10 +2361,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Creates new device command.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">POST /device/{deviceId}/command</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2362,7 +2380,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (CreateDeviceCommand)</p>
 
@@ -2412,7 +2430,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command execution result, an optional value that could be provided by device.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/DeviceCommand">DeviceCommand</a> resource in the response body.</p>
 <table>
@@ -2440,7 +2458,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand-update">
-        
+
 
 
 
@@ -2448,10 +2466,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Updates an existing device command.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /device/{deviceId}/command/{commandId}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2473,7 +2491,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device command identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (UpdateDeviceCommand)</p>
 
@@ -2523,13 +2541,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command execution result, an optional value that could be provided by device.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-DeviceCommand-poll">
-        
+
 
 
 
@@ -2540,10 +2558,10 @@ The diagram below reflects all used resource types and their relationships:</p>
                 </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/command/poll?timestamp={timestamp}&amp;names={names}&amp;waitTimeout={waitTimeout}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2583,13 +2601,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Limits number of commands.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceCommand)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/DeviceCommand">DeviceCommand</a> resources in the response body.</p>
 <table>
@@ -2657,7 +2675,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand-wait">
-        
+
 
 
 
@@ -2668,10 +2686,10 @@ The diagram below reflects all used resource types and their relationships:</p>
                 </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/command/{commandId}/poll?waitTimeout={waitTimeout}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2699,13 +2717,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceCommand)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/DeviceCommand">DeviceCommand</a> resource in the response body.</p>
 <table>
@@ -2773,7 +2791,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceCommand-pollMany">
-        
+
 
 
 
@@ -2784,10 +2802,10 @@ The diagram below reflects all used resource types and their relationships:</p>
                 </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/command/poll?deviceIds={deviceIds}&amp;timestamp={timestamp}&amp;names={names}&amp;waitTimeout={waitTimeout}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -2827,13 +2845,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Limits number of commands.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceCommand)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of the following resources in the response body.</p>
 <table>
@@ -2901,7 +2919,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceNotification">
-        
+
 
 
 
@@ -2999,7 +3017,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceNotification-query">
-        
+
 
 
 
@@ -3007,10 +3025,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Queries device notifications.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/notification</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3068,13 +3086,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Number of records to skip from the result list.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token  (GetDeviceNotification)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/DeviceNotification">DeviceNotification</a> resources in the response body.</p>
 <table>
@@ -3112,7 +3130,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceNotification-get">
-        
+
 
 
 
@@ -3120,10 +3138,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets information about device notification.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/notification/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3145,13 +3163,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token  (GetDeviceNotification)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/DeviceNotification">DeviceNotification</a> resource in the response body.</p>
 <table>
@@ -3189,7 +3207,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceNotification-insert">
-        
+
 
 
 
@@ -3197,10 +3215,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Creates new device notification.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">POST /device/{deviceId}/notification</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3216,7 +3234,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Device unique identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token  (CreateDeviceNotification)</p>
 
@@ -3248,7 +3266,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Notification parameters, a JSON object with an arbitrary structure.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/DeviceNotification">DeviceNotification</a> resource in the response body.</p>
 <table>
@@ -3286,7 +3304,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceNotification-poll">
-        
+
 
 
 
@@ -3297,10 +3315,10 @@ The diagram below reflects all used resource types and their relationships:</p>
                 </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/{deviceId}/notification/poll?timestamp={timestamp}&amp;names={names}&amp;waitTimeout={waitTimeout}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3334,13 +3352,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceNotification)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/DeviceNotification">DeviceNotification</a> resources in the response body.</p>
 <table>
@@ -3378,7 +3396,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-DeviceNotification-pollMany">
-        
+
 
 
 
@@ -3389,10 +3407,10 @@ The diagram below reflects all used resource types and their relationships:</p>
                 </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /device/notification/poll?deviceIds={deviceIds}&amp;timestamp={timestamp}&amp;names={names}&amp;waitTimeout={waitTimeout}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3426,13 +3444,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Waiting timeout in seconds (default: 30 seconds, maximum: 60 seconds). Specify 0 to disable waiting.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetDeviceNotification)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of the following resources in the response body.</p>
 <table>
@@ -3470,7 +3488,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Network">
-        
+
 
 
 
@@ -3551,7 +3569,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Network-list">
-        
+
 
 
 
@@ -3560,10 +3578,10 @@ The diagram below reflects all used resource types and their relationships:</p>
             <p class="doc">The result list is limited to networks the client has access to.</p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /network</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3609,13 +3627,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Number of records to skip from the result list.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetNetwork)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/Network">Network</a> resources in the response body.</p>
 <table>
@@ -3643,7 +3661,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Network-get">
-        
+
 
 
 
@@ -3651,10 +3669,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets information about device network and its devices.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /network/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3670,13 +3688,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetNetwork)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/Network">Network</a> resource in the response body.</p>
 <table>
@@ -3704,7 +3722,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Network-insert">
-        
+
 
 
 
@@ -3712,11 +3730,11 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Creates new device network.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">POST /network</pre>
-    
-    
+
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageNetwork)</p>
 
@@ -3748,7 +3766,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network description.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/Network">Network</a> resource in the response body.</p>
 <table>
@@ -3776,7 +3794,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-Network-update">
-        
+
 
 
 
@@ -3784,10 +3802,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Updates an existing device network.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /network/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3803,7 +3821,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageNetwork)</p>
 
@@ -3835,13 +3853,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network description.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-Network-delete">
-        
+
 
 
 
@@ -3849,10 +3867,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Deletes an existing device network.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">DELETE /network/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -3868,19 +3886,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageNetwork)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-User">
-        
+
 
 
 
@@ -4060,7 +4078,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-User-list">
-        
+
 
 
 
@@ -4068,10 +4086,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets list of users.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /user</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -4129,13 +4147,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Number of records to skip from the result list.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageUser)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns array of <a href="#Reference/User">User</a> resources in the response body.</p>
 <table>
@@ -4204,7 +4222,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-User-get">
-        
+
 
 
 
@@ -4216,10 +4234,10 @@ The diagram below reflects all used resource types and their relationships:</p>
             </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /user/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -4235,13 +4253,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>User identifier. Use the &#39;current&#39; keyword to get information about the current user.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetCurrentUser)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/User">User</a> resource in the response body.</p>
 <table>
@@ -4330,7 +4348,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-User-insert">
-        
+
 
 
 
@@ -4338,11 +4356,11 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Creates new user.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">POST /user</pre>
-    
-    
+
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageUser)</p>
 
@@ -4413,7 +4431,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>User data, a JSON object with an arbitrary structure.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/User">User</a> resource in the response body.</p>
 <table>
@@ -4482,7 +4500,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-User-update">
-        
+
 
 
 
@@ -4497,10 +4515,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 </ul></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /user/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -4516,7 +4534,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>User identifier. Use the &#39;current&#39; keyword to update information of the current user.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (UpdateCurrentUser)</p>
 
@@ -4593,13 +4611,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-User-delete">
-        
+
 
 
 
@@ -4607,10 +4625,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Deletes an existing user.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">DELETE /user/{id}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -4626,19 +4644,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>User identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageUser)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
         <div id="Reference-User-getCurrent">
-        
+
 
 
 
@@ -4650,16 +4668,16 @@ The diagram below reflects all used resource types and their relationships:</p>
             </p></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /user/current</pre>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (GetCurrentUser)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns a <a href="#Reference/User">User</a> resource in the response body.</p>
 <table>
@@ -4750,7 +4768,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-User-updateCurrent">
-        
+
 
 
 
@@ -4765,10 +4783,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 </ul></p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /user/current</pre>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (UpdateCurrentUser)</p>
 
@@ -4845,13 +4863,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Indicates if user reviewed an intro.</td>
     </tr>
 </table>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-User-getNetwork">
-        
+
 
 
 
@@ -4859,10 +4877,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Gets information about user/network association.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">GET /user/{id}/network/{networkId}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -4884,13 +4902,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageUser)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns the following structure in the response body.</p>
 <table>
@@ -4923,7 +4941,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="Reference-User-assignNetwork">
-        
+
 
 
 
@@ -4931,10 +4949,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Associates network with the user.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">PUT /user/{id}/network/{networkId}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -4956,19 +4974,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageUser)</p>
 
 <h3>Request Body</h3>
 <p>In the request body, supply the empty object.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="Reference-User-unassignNetwork">
-        
+
 
 
 
@@ -4976,10 +4994,10 @@ The diagram below reflects all used resource types and their relationships:</p>
 <p>Removes association between network and user.</p>
 
 <h2>Request</h2>
-    
+
 <h3>HTTP Request</h3>
 <pre class="uri">DELETE /user/{id}/network/{networkId}</pre>
-    
+
 <h3>Parameters</h3>
 <table>
     <tr>
@@ -5001,19 +5019,19 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Network identifier.</td>
     </tr>
 </table>
-    
+
 <h3>Authorization</h3>
 <p>Access JSON Web Token (ManageUser)</p>
 
 <h3>Request Body</h3>
 <p>Do not supply a request body with this method.</p>
-    
+
 <h2>Response</h2>
 <p>If successful, this method returns an empty response body.</p>
 
     </div>
     <div id="WsReference-Client">
-        
+
 
 
 
@@ -5026,7 +5044,7 @@ The diagram below reflects all used resource types and their relationships:</p>
             and then start sending commands to devices using the command/insert message.
             As soon as a command is processed by a device, the server sends the command/update message.
             </p><p class="doc">
-            After connection is established, devices need to register using the device/save message, 
+            After connection is established, devices need to register using the device/save message,
             perform authentication and then start sending notifications using the notification/insert message.
             </p><p class="doc">
             Clients may also subscribe to device notifications using the notification/subscribe message
@@ -5148,6 +5166,24 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Gets meta-information about the current API.</td>
     </tr>
     <tr>
+        <td><a href="#WsReference/Client/token">token</a></td>
+        <td>Client / Device</td>
+        <td>None</td>
+        <td>Creates access and refresh tokens by login and password.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/tokencreate">token/create</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (ManageToken)</td>
+        <td>Creates access and refresh tokens by payload.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/tokenrefresh">token/refresh</a></td>
+        <td>Client / Device</td>
+        <td>None</td>
+        <td>Refreshes access token by refresh token.</td>
+    </tr>
+    <tr>
         <td><a href="#WsReference/Client/srvcommandinsert">srv: command/insert</a></td>
         <td>Server</td>
         <td>n/a</td>
@@ -5170,13 +5206,13 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-authenticate">
-        
+
 
 
 
 <h1>Client / Device : authenticate</h1>
 
-<p>Authenticates a client / device by a JSON Web Token. 
+<p>Authenticates a client / device by a JSON Web Token.
     After successful authentication, all subsequent messages may exclude JSON Web Token parameter.</p>
 
 <h2>Request Message</h2>
@@ -5527,7 +5563,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;result&quot;</span>: <span class="blue">{object}</span>
     }]
-            
+
 }
 </pre>
 
@@ -5613,7 +5649,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-commandinsert">
-        
+
 
 
 
@@ -5773,7 +5809,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-commandsubscribe">
-        
+
 
 
 
@@ -5893,7 +5929,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-commandunsubscribe">
-        
+
 
 
 
@@ -5985,7 +6021,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-commandupdate">
-        
+
 
 
 
@@ -6128,7 +6164,7 @@ The diagram below reflects all used resource types and their relationships:</p>
     </div>
 
     <div id="WsReference-Client-deviceget">
-    
+
     <h1>Client / Device: device/get</h1>
 
     <p>Gets information about the current device.</p>
@@ -6796,7 +6832,7 @@ The diagram below reflects all used resource types and their relationships:</p>
         <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>,
         <span class="green">&quot;parameters&quot;</span>: <span class="blue">{object}</span>
     }]
-            
+
 }
 </pre>
 
@@ -6862,7 +6898,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-notificationinsert">
-        
+
 
 
 
@@ -6995,7 +7031,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-notificationsubscribe">
-        
+
 
 
 
@@ -7108,7 +7144,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-notificationunsubscribe">
-        
+
 
 
 
@@ -7200,7 +7236,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-serverinfo">
-        
+
 
 
 
@@ -7302,8 +7338,385 @@ The diagram below reflects all used resource types and their relationships:</p>
 </table>
 
     </div>
+    <div id="WsReference-Client-token">
+
+
+
+
+        <h1>Client / Device : token</h1>
+
+        <p>Creates access and refresh tokens by login and password.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>None</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;login&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;password&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: token</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>login</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>User login.</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>User password.</td>
+            </tr>
+        </table>
+
+        <h2>Response Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;accessToken&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;refreshToken&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: token</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>accessToken</td>
+                <td>string</td>
+                <td>JSON Web Token for authorization.</td>
+            </tr>
+            <tr>
+                <td>refreshToken</td>
+                <td>string</td>
+                <td>JSON Web Token for refreshing access token.</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="WsReference-Client-tokencreate">
+
+
+
+
+        <h1>Client / Device : token/create</h1>
+
+        <p>Creates access and refresh tokens by payload.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (ManageToken)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;payload&quot;</span>: {
+        <span class="green">&quot;userId&quot;</span>: <span class="blue">{object}</span>,
+        <span class="green">&quot;actions&quot;</span>: <span class="blue">{array}</span>,
+        <span class="green">&quot;networkIds&quot;</span>: <span class="blue">{array}</span>,
+        <span class="green">&quot;deviceIds&quot;</span>: <span class="blue">{array}</span>,
+        <span class="green">&quot;expiration&quot;</span>: <span class="blue">{datetime}</span>
+    }
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: token/create</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>payload</td>
+                <td>Yes</td>
+                <td>object</td>
+                <td>User payload with specific permissions</td>
+            </tr>
+            <tr>
+                <td>payload.userId</td>
+                <td>Yes</td>
+                <td>integer</td>
+                <td>User identifier.</td>
+            </tr>
+            <tr>
+                <td>payload.actions</td>
+                <td>No</td>
+                <td>array</td>
+                <td>A collection of allowed actions.
+                    Available values:
+                    <ul class="doc">
+                        <li class="doc">
+                            GetNetwork: get information about network
+                        </li>
+                        <li class="doc">
+                            GetDevice: get information about device and device class
+                        </li>
+                        <li class="doc">
+                            GetDeviceNotification: get or subscribe to device notifications
+                        </li>
+                        <li class="doc">
+                            GetDeviceCommand: get or subscribe to commands sent to device
+                        </li>
+                        <li class="doc">
+                            RegisterDevice: register a device
+                        </li>
+                        <li class="doc">
+                            CreateDeviceNotification: post notifications on behalf of device
+                        </li>
+                        <li class="doc">
+                            CreateDeviceCommand: post commands to device
+                        </li>
+                        <li class="doc">
+                            UpdateDeviceCommand: update status of commands on behalf of device
+                        </li>
+                        <li class="doc">
+                            GetCurrentUser: get current user info
+                        </li>
+                        <li class="doc">
+                            UpdateCurrentUser: update current user
+                        </li>
+                        <li class="doc">
+                            ManageUser: admin permission for managing all users
+                        </li>
+                        <li class="doc">
+                            ManageConfiguration: admin permission for managing server configuration
+                        </li>
+                        <li class="doc">
+                            ManageNetwork: admin permission for managing all networks and its devices
+                        </li>
+                        <li class="doc">
+                            ManageToken: admin permission for creating tokens
+                        </li>
+                    </ul></td>
+            </tr>
+            <tr>
+                <td>payload.networkIds</td>
+                <td>No</td>
+                <td>array</td>
+                <td>A collection of identifiers of allowed networks.
+                    Only API requests for devices within the allowed networks will be authorized with this permission.
+                    Set to null to allow callees to access all networks permitted for the owner user.</td>
+            </tr>
+            <tr>
+                <td>payload.deviceIds</td>
+                <td>No</td>
+                <td>array</td>
+                <td>A collection of unique identifiers of allowed devices.
+                    Only API requests for allowed devices will be authorized with this permission.
+                    Set to null to allow callees to access all devices permitted for the owner user.</td>
+            </tr>
+            <tr>
+                <td>payload.expiration</td>
+                <td>No</td>
+                <td>datetime</td>
+                <td>Expiration date (UTC).</td>
+            </tr>
+        </table>
+
+        <h2>Response Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;accessToken&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;refreshToken&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: token</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>accessToken</td>
+                <td>string</td>
+                <td>JSON Web Token for authorization.</td>
+            </tr>
+            <tr>
+                <td>refreshToken</td>
+                <td>string</td>
+                <td>JSON Web Token for refreshing access token.</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="WsReference-Client-tokenrefresh">
+
+
+
+
+        <h1>Client / Device : token/refresh</h1>
+
+        <p>Refreshes access token by refresh token.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>None</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;refreshToken&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: token</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>refreshToken</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>User JSON Web Refresh Token.</td>
+            </tr>
+        </table>
+
+        <h2>Response Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;accessToken&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: token</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>accessToken</td>
+                <td>string</td>
+                <td>JSON Web Token for authorization.</td>
+            </tr>
+        </table>
+
+    </div>
     <div id="WsReference-Client-srvcommandinsert">
-        
+
 
 
 
@@ -7405,7 +7818,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-srvcommandupdate">
-        
+
 
 
 
@@ -7496,7 +7909,7 @@ The diagram below reflects all used resource types and their relationships:</p>
 
     </div>
     <div id="WsReference-Client-srvnotificationinsert">
-        
+
 
 
 
