@@ -102,6 +102,7 @@
                         <li><a href="#WsReference/Client/deviceget">device/get</a></li>
                         <li><a href="#WsReference/Client/devicelist">device/list</a></li>
                         <li><a href="#WsReference/Client/devicesave">device/save</a></li>
+                        <li><a href="#WsReference/Client/devicedelete">device/delete</a></li>
                         <li><a href="#WsReference/Client/notificationget">notification/get</a></li>
                         <li><a href="#WsReference/Client/notificationlist">notification/list</a></li>
                         <li><a href="#WsReference/Client/notificationinsert">notification/insert</a></li>
@@ -652,10 +653,16 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>Gets list of devices.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/devicesave">device/save</a></td>
+                    <td><a href="#WsReference/Client/devicesave">device/save</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Registers or updates a device.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/devicedelete">device/delete</a></td>
+                    <td>Device</td>
+                    <td>Device</td>
+                    <td>Deletes a device.</td>
                 </tr>
                 <tr>
                     <td><a href="#WsReference/Client/notificationinsert">notification/insert</a></td>
@@ -753,10 +760,16 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>Gets information about the current device.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/devicesave">device/save</a></td>
+                    <td><a href="#WsReference/Client/devicesave">device/save</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Registers or updates a device.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/devicedelete">device/delete</a></td>
+                    <td>Device</td>
+                    <td>Device</td>
+                    <td>Deletes a device.</td>
                 </tr>
                 <tr>
                     <td><a href="#WsReference/Device/notificationinsert">notification/insert</a></td>
@@ -6578,6 +6591,91 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Request unique identifier as specified in the request message.</td>
     </tr>
 </table>
+
+    </div>
+    <div id="WsReference-Client-devicedelete">
+
+
+
+
+        <h1>Client / Device: device/delete</h1>
+
+        <p>Deletes an existing device.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Device</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;deviceId&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: device/delete</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>deviceId</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Device unique identifier.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+<span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+<span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+<span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: device/save</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+        </table>
 
     </div>
     <div id="WsReference-Client-notificationget">
