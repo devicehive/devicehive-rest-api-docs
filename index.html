@@ -2627,7 +2627,13 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>timestamp</td>
         <td>No</td>
         <td>datetime</td>
-        <td>Timestamp of the last received command (UTC). If not specified, the server&#39;s timestamp is taken instead.</td>
+        <td>Timestamp of the last received / last updated (if returnUpdatedCommands selected) command (UTC). If not specified, the server&#39;s timestamp is taken instead.</td>
+    </tr>
+    <tr>
+        <td>returnUpdatedCommands</td>
+        <td>No</td>
+        <td>boolean</td>
+        <td>Checks if updated commands should be returned. If not specified, default value is false.</td>
     </tr>
     <tr>
         <td>names</td>
@@ -2679,6 +2685,11 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Command timestamp (UTC).</td>
     </tr>
     <tr>
+        <td>lastUpdated</td>
+        <td>datetime</td>
+        <td>Last command update timestamp (UTC).</td>
+    </tr>
+    <tr>
         <td>userId</td>
         <td>integer</td>
         <td>Associated user identifier.</td>
@@ -2707,16 +2718,6 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>result</td>
         <td>object</td>
         <td>Command execution result, an optional value that could be provided by device.</td>
-    </tr>
-    <tr>
-        <td>isUpdated</td>
-        <td>boolean</td>
-        <td>Indicates, if command was updated.</td>
-    </tr>
-    <tr>
-        <td>hazelcastKey</td>
-        <td>string</td>
-        <td>Record unique identifier in the in-memory DB.</td>
     </tr>
 </table>
 
