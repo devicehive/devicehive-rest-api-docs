@@ -93,6 +93,9 @@
                 <li><a href="#WsReference/Client">Client / Device</a>
                     <ul id="nav-WsReference-Client">
                         <li><a href="#WsReference/Client/authenticate">authenticate</a></li>
+                        <li><a href="#WsReference/Client/configurationget">configuration/get</a></li>
+                        <li><a href="#WsReference/Client/configurationput">configuration/put</a></li>
+                        <li><a href="#WsReference/Client/configurationdelete">configuration/delete</a></li>
                         <li><a href="#WsReference/Client/commandget">command/get</a></li>
                         <li><a href="#WsReference/Client/commandlist">command/list</a></li>
                         <li><a href="#WsReference/Client/commandinsert">command/insert</a></li>
@@ -109,6 +112,7 @@
                         <li><a href="#WsReference/Client/notificationsubscribe">notification/subscribe</a></li>
                         <li><a href="#WsReference/Client/notificationunsubscribe">notification/unsubscribe</a></li>
                         <li><a href="#WsReference/Client/serverinfo">server/info</a></li>
+                        <li><a href="#WsReference/Client/clusterinfo">cluster/info</a></li>
                         <li><a href="#WsReference/Client/token">token</a></li>
                         <li><a href="#WsReference/Client/tokencreate">token/create</a></li>
                         <li><a href="#WsReference/Client/tokenrefresh">token/refresh</a></li>
@@ -616,6 +620,24 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>Authenticates a client by a JSON Web Token.</td>
                 </tr>
                 <tr>
+                    <td><a href="#WsReference/Client/configurationget">configuration/get</a></td>
+                    <td>Client / Device</td>
+                    <td>Access JSON Web Token (ManageConfiguration)</td>
+                    <td>Returns requested property value.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/configurationput">configuration/put</a></td>
+                    <td>Client / Device</td>
+                    <td>Access JSON Web Token (ManageConfiguration)</td>
+                    <td>Creates new or updates existing property.</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/configurationdelete">configuration/delete</a></td>
+                    <td>Client / Device</td>
+                    <td>Access JSON Web Token (ManageConfiguration)</td>
+                    <td>Deletes a property.</td>
+                </tr>
+                <tr>
                     <td><a href="#WsReference/Client/commandinsert">command/insert</a></td>
                     <td>Client</td>
                     <td>Access JSON Web Token (CreateDeviceCommand)</td>
@@ -690,6 +712,12 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>Gets meta-information about the current API.</td>
                 </tr>
                 <tr>
+                    <td><a href="#WsReference/Client/clusterinfo">cluster/info</a></td>
+                    <td>Client</td>
+                    <td>None</td>
+                    <td>Returns information about cluster (Kafka, Zookeeper etc.)</td>
+                </tr>
+                <tr>
                     <td><a href="#WsReference/Client/srvcommandinsert">srv: command/insert</a></td>
                     <td>Server</td>
                     <td>n/a</td>
@@ -728,33 +756,33 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <th style="width:400px">Description</th>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/authenticate">authenticate</a></td>
+                    <td><a href="#WsReference/Client/authenticate">authenticate</a></td>
                     <td>Device</td>
                     <td>None</td>
                     <td>Authenticates a device.
             After successful authentication, all subsequent messages may exclude token parameter.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/commandsubscribe">command/subscribe</a></td>
+                    <td><a href="#WsReference/Client/commandsubscribe">command/subscribe</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Subscribes the device to commands.
             After subscription is completed, the server will start to send command/insert messages to the connected device.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/commandunsubscribe">command/unsubscribe</a></td>
+                    <td><a href="#WsReference/Client/commandunsubscribe">command/unsubscribe</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Unsubscribes the device from commands.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/commandupdate">command/update</a></td>
+                    <td><a href="#WsReference/Client/commandupdate">command/update</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Updates an existing device command.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/deviceget">device/get</a></td>
+                    <td><a href="#WsReference/Client/deviceget">device/get</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Gets information about the current device.</td>
@@ -772,19 +800,25 @@ The diagram below reflects all used resource types and their relationships:</p>
                     <td>Deletes a device.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/notificationinsert">notification/insert</a></td>
+                    <td><a href="#WsReference/Client/notificationinsert">notification/insert</a></td>
                     <td>Device</td>
                     <td>Device</td>
                     <td>Creates new device notification.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/serverinfo">server/info</a></td>
+                    <td><a href="#WsReference/Client/serverinfo">server/info</a></td>
                     <td>Device</td>
                     <td>None</td>
                     <td>Gets meta-information of the current API.</td>
                 </tr>
                 <tr>
-                    <td><a href="#WsReference/Device/srvcommandinsert">srv: command/insert</a></td>
+                    <td><a href="#WsReference/Client/serverinfo">cluster/info</a></td>
+                    <td>Device</td>
+                    <td>None</td>
+                    <td>Returns information about cluster (Kafka, Zookeeper etc.)</td>
+                </tr>
+                <tr>
+                    <td><a href="#WsReference/Client/srvcommandinsert">srv: command/insert</a></td>
                     <td>Server</td>
                     <td>n/a</td>
                     <td>Notifies the device about new command.</td>
@@ -5072,6 +5106,24 @@ The diagram below reflects all used resource types and their relationships:</p>
             all subsequent messages may exclude JSON Web Token parameter.</td>
     </tr>
     <tr>
+        <td><a href="#WsReference/Client/configurationget">configuration/get</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (ManageConfiguration)</td>
+        <td>Returns requested property value.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/configurationput">configuration/put</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (ManageConfiguration)</td>
+        <td>Creates new or updates existing property.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/configurationdelete">configuration/delete</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (ManageConfiguration)</td>
+        <td>Deletes a property.</td>
+    </tr>
+    <tr>
         <td><a href="#WsReference/Client/commandget">command/get</a></td>
         <td>Client / Device</td>
         <td>Access JSON Web Token (GetDeviceCommand)</td>
@@ -5125,6 +5177,12 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Client / Device</td>
         <td>Access JSON Web Token (RegisterDevice)</td>
         <td>Registers or updates a device.</td>
+    </tr>
+    <tr>
+        <td><a href="#WsReference/Client/devicedelete">device/delete</a></td>
+        <td>Client / Device</td>
+        <td>Access JSON Web Token (RegisterDevice)</td>
+        <td>Deletes a device.</td>
     </tr>
     <tr>
         <td><a href="#WsReference/Client/notificationget">notification/get</a></td>
@@ -5287,6 +5345,315 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>Request unique identifier as specified in the request message.</td>
     </tr>
 </table>
+
+    </div>
+    <div id="WsReference-Client-configurationget">
+
+        <h1>Client / Device: configuration/get</h1>
+
+        <p>Returns requested property value.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (ManageConfiguration)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: configuration/get</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Configuration parameter name.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;configuration&quot;</span>: {
+        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;value&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;entityVersion&quot;</span>: <span class="blue">{integer}</span>
+    }
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: configuration/get</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>configuration</td>
+                <td>object</td>
+                <td>The <a href="#Reference/Configuration">Configuration</a> resource.</td>
+            </tr>
+            <tr>
+                <td>configuration.name</td>
+                <td>string</td>
+                <td>Configuration parameter name.</td>
+            </tr>
+            <tr>
+                <td>configuration.value</td>
+                <td>string</td>
+                <td>Configuration parameter value.</td>
+            </tr>
+            <tr>
+                <td>configuration.entityVersion</td>
+                <td>integer</td>
+                <td>Specifies the version field or property of an entity class.</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="WsReference-Client-configurationput">
+
+
+
+
+        <h1>Client / Device: configuration/put</h1>
+
+        <p>Creates new or updates existing property.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (ManageConfiguration)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;value&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: configuration/put</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Configuration parameter name.</td>
+            </tr>
+            <tr>
+                <td>value</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Configuration parameter value.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;configuration&quot;</span>: {
+        <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;value&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;entityVersion&quot;</span>: <span class="blue">{integer}</span>
+    }
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: configuration/put</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>configuration</td>
+                <td>object</td>
+                <td>The <a href="#Reference/Configuration">Configuration</a> resource.</td>
+            </tr>
+            <tr>
+                <td>configuration.name</td>
+                <td>string</td>
+                <td>Configuration parameter name.</td>
+            </tr>
+            <tr>
+                <td>configuration.value</td>
+                <td>string</td>
+                <td>Configuration parameter value.</td>
+            </tr>
+            <tr>
+                <td>configuration.entityVersion</td>
+                <td>integer</td>
+                <td>Specifies the version field or property of an entity class.</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="WsReference-Client-configurationdelete">
+
+
+
+
+        <h1>Client / Device: configuration/delete</h1>
+
+        <p>Deletes a property.</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>Access JSON Web Token (ManageConfiguration)</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;name&quot;</span>: <span class="blue">{string}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: configuration/delete</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Configuration parameter name.</td>
+            </tr>
+        </table>
+
+        <h2>Server Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: configuration/delete</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+        </table>
 
     </div>
     <div id="WsReference-Client-commandget">
@@ -7419,6 +7786,103 @@ The diagram below reflects all used resource types and their relationships:</p>
         <td>REST server URL.</td>
     </tr>
 </table>
+
+    </div>
+    <div id="WsReference-Client-clusterinfo">
+
+
+
+
+        <h1>Client / Device : cluster/info</h1>
+
+        <p>Returns information about cluster (Kafka, Zookeeper etc.)</p>
+
+        <h2>Request Message</h2>
+        <h3>Authorization</h3>
+        <p>None</p>
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>
+}
+</pre>
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Required</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>Yes</td>
+                <td>string</td>
+                <td>Action name: cluster/info</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>No</td>
+                <td>object</td>
+                <td>Request unique identifier, will be passed back in the response message.</td>
+            </tr>
+        </table>
+
+        <h2>Response Message</h2>
+
+        <h3>Message Representation</h3>
+        <pre>
+{
+    <span class="green">&quot;action&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;status&quot;</span>: <span class="blue">{string}</span>,
+    <span class="green">&quot;requestId&quot;</span>: <span class="blue">{object}</span>,
+    <span class="green">&quot;clusterInfo&quot;</span>: {
+        <span class="green">&quot;bootstrap.servers&quot;</span>: <span class="blue">{string}</span>,
+        <span class="green">&quot;zookeper.connect&quot;</span>: <span class="blue">{string}</span>
+    }
+}
+</pre>
+
+
+        <h3>Message Parameters</h3>
+        <table>
+            <tr>
+                <th style="width:200px">Property Name</th>
+                <th style="width:80px">Type</th>
+                <th style="width:400px">Description</th>
+            </tr>
+            <tr>
+                <td>action</td>
+                <td>string</td>
+                <td>Action name: cluster/info</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Operation execution status (success or error).</td>
+            </tr>
+            <tr>
+                <td>requestId</td>
+                <td>object</td>
+                <td>Request unique identifier as specified in the request message.</td>
+            </tr>
+            <tr>
+                <td>clusterInfo</td>
+                <td>object</td>
+                <td>The information about cluster.</td>
+            </tr>
+            <tr>
+                <td>bootstrap.servers</td>
+                <td>string</td>
+                <td>Bootstrap servers address.</td>
+            </tr>
+            <tr>
+                <td>zookeper.connect</td>
+                <td>datetime</td>
+                <td>Zookeeper servers address.</td>
+            </tr>
+        </table>
 
     </div>
     <div id="WsReference-Client-token">
